@@ -1,5 +1,5 @@
 .nav {
-    position: fixed;
+    position: relative;
     top: 0;
     left:  0;
     width: 100%;
@@ -15,7 +15,7 @@
 
 }
 .nav a{
-    font-size: 20px;
+    font-size: 16px;
     font-family: 'Segoe UI';
     text-decoration: none;
     color:white;
@@ -23,7 +23,7 @@
     font-weight: 500;
     margin: 0px;
     display: block;
-    padding: 20px;
+    padding: 15px;
 }
 
 .nav a:active{

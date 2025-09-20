@@ -1,29 +1,39 @@
 #homepage{
     display: flex;
     flex-direction: column;
-    height:100vh;
-    width: 100vw;
     
 }
 
-#heading{
-    flex: 1;
+/* Make main take full viewport height */
+#main {
+    min-height: 90vh;       /* full page */
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    justify-content: center;  /* centers heading horizontally */
+    align-items: center;      /* centers heading vertically */
     text-align: center;
+}
+#chat {
+    min-height: 100vh;    /* full page */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* centers heading horizontally */
+    align-items: center;      /* centers heading vertically */
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 h1 {
     color: #341539;
-    font-size: 120px;
+    font-size: 80px;
     padding: 0px;
     margin:0px;
 }
 h2{
     color: #180a1b;
-    font-size: 25px;
+    font-size: 16px;
     padding: 0px;
     margin:0px;
 }
@@ -33,14 +43,44 @@ button{
     background-color:#341539;
     color: white;
     border-width: 0px;
-    font-size: 25px;
+    font-size: 16px;
     font-family: 'Segoe UI';
     font-weight: bold;
-    border-radius:10%;
+    border-radius: 20px;
     margin: 10px;
     
     
 }
 button:hover{
     background-color:#180a1b;
+}
+#programs{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.program{
+    width: 305px;
+    height:130px;
+    background-color: #341539;
+    border-radius: 16px;
+    padding: 15px;
+    overflow: hidden;
+}
+.program h3{
+    color:white;
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 7px;
+    font-size: 16px;
+
+}
+.program p{
+    color:white;
+    margin: 0px;
+    padding: 0px;
+    font-size: 16px;
+
 }
