@@ -1,0 +1,37 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left:  0;
+    width: 100%;
+    background-color:#341539;
+    display:flex;
+    justify-content: right;
+    align-items: center;
+}
+.nav ul{
+    list-style-type: none;
+    margin: 0px;
+    display: flex;
+
+}
+.nav a{
+    font-size: 20px;
+    font-family: 'Segoe UI';
+    text-decoration: none;
+    color:white;
+    text-align: none;
+    font-weight: 500;
+    margin: 0px;
+    display: block;
+    padding: 20px;
+}
+
+.nav a:active{
+    background-color: #180a1b;
+}
+.nav a:hover{
+    background-color: #180a1b;
+}
+
+
+
