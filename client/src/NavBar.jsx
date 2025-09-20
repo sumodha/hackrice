@@ -7,7 +7,7 @@ const NavBar = () => {
     return (
         <nav className="nav">
         <ul>
-        <li> <Link to = "/">home</Link></li>
+        <li> <Link to = "/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>home</Link></li>
         <li><Link to="/about">about us</Link></li>
         <li><Link to="/resources">resources</Link></li>
         </ul>
