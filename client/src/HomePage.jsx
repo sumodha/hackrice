@@ -4,6 +4,7 @@ import {useState, useRef, useEffect} from 'react';
 
 const HomePage = () => {
   const chatRef = useRef(null); // ref to the chat section
+  const [isTyping, setIsTyping] = useState(false);
   const [programs, setPrograms] = useState([{name: "program 1", description: "description 1"}, 
     {name: "program 2", description: "description 2"}, 
     {name: "program 3", description: "descitpion 3"}, 
@@ -15,7 +16,7 @@ const HomePage = () => {
   const programsRef = useRef(null);
 
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hi 👋 Welcome to CareNet! What are you looking for today?" }
+    { sender: "bot", text: "“Hello! Welcome to CareNet, I can help you find programs, answer questions about eligibility, and guide you through resources. How can I help you today?”" }
   ]);
   const [input, setInput] = useState("");
   
@@ -32,6 +33,7 @@ const HomePage = () => {
 
     const sendMessageBackend = async (input) => {
       try {
+        setIsTyping(true); // start typing indicator
       const response = await fetch(`http://localhost:5000/api/stage`, {
       method: "GET",
       headers: { "Authorization": "" }, 
@@ -94,7 +96,10 @@ const HomePage = () => {
   } catch (err) {
     console.error("Error fetching external data:", err);
     return;
+  } finally {
+    setIsTyping(false); // end typing indicator
   }
+
   }
 
   const sendMessage = () => {
@@ -105,11 +110,7 @@ const HomePage = () => {
     sendMessageBackend(input);
     setInput("");
 
-    // Fake bot reply
-    setTimeout(() => {
-      const botMessage = { sender: "bot", text: "You said: " + input };
-      setMessages((prev) => [...prev, botMessage]);
-    }, 600);
+    
   };
 
   
@@ -180,6 +181,14 @@ const HomePage = () => {
             )}
           </div>
         ))}
+         {/* Typing indicator */}
+  {isTyping && (
+    <div className="message bot">
+      <div className="avatar">🤖</div>
+      <div className="bubble typing">Typing...</div>
+    </div>
+  )}
+
       </div>
 
       <div className="chat-input">

@@ -4,4 +4,10 @@
     padding: 50px;
     width: 100%;
 }
+#title {
+    color: #212D40;
+    font-size: 50px;
+    padding: 0px;
+    margin:0px;
+}
 

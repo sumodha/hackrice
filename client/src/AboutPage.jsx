@@ -2,7 +2,7 @@ import "./AboutPage.css"
 const AboutPage = () => {
     return (
         <div id= "about">
-            <h1>About Us</h1>
+            <h1 id="title">About Us</h1>
             <p>At <b>CareNet</b>, we believe that access to support should be simple, clear, and compassionate. Too often, individuals and families struggle to find the social welfare programs they qualify for — not because help doesn’t exist, but because it’s hard to navigate a maze of applications, requirements, and agencies. That’s where we come in.</p>
             <p>CareNet is a platform designed to connect people with the right social welfare programs based on their unique eligibility. Whether it’s healthcare, housing, food assistance, education, or community resources, we help you find programs quickly and confidently.</p>
             <p>Our mission is simple:</p>

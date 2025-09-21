@@ -3,7 +3,7 @@ import "./ResourcesPage.css"
 const ResourcesPage = () => {
     return (
         <div id="resources">
-            <h1>Resources</h1>
+            <h1 id="title">Resources</h1>
             <p>
                 <strong><a href="https://www.benefits.gov" target="_blank" rel="noopener noreferrer">
                     Benefits.gov

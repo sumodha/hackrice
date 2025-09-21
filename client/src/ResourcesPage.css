@@ -4,8 +4,8 @@
     padding: 50px;
     width: 100%;
 }
-.title {
-    color: #341539;
+#title {
+    color: #212D40;
     font-size: 50px;
     padding: 0px;
     margin:0px;
@@ -17,18 +17,18 @@
 #resources p {
     font-size: 18px;
     margin-bottom: 16px;
-    color: #180a1b;
+    color: #212D40;
 }
 
 /* Link styles */
 #resources a {
-    color: #341539;              /* matches your theme */
+    color: #212D40;              /* matches your theme */
     text-decoration: none;       /* removes underline */
     font-weight: bold;
     transition: color 0.2s ease, text-decoration 0.2s ease;
 }
 
 #resources a:hover {
-    color: #180a1b;              /* darker on hover */
+    color: #212D40;              /* darker on hover */
     text-decoration: underline;  /* underline only on hover */
 }

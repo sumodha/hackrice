@@ -7,6 +7,7 @@
 #programs-header{
     font-size: 50px !important ; 
     margin: 20px;
+    color: #212D40;
 }
 
 /* Make main take full viewport height */
@@ -18,6 +19,7 @@
     justify-content: center;  /* centers heading horizontally */
     align-items: center;      /* centers heading vertically */
     text-align: center;
+    background: linear-gradient(to right,#364156, #212D40);
 }
 #chat {
     min-height: 100vh;    /* full page */
@@ -27,17 +29,18 @@
     justify-content: center;  /* centers heading horizontally */
     align-items: center;      /* centers heading vertically */
     text-align: center;
-    margin-bottom: 50px;
+    padding-bottom: 50px;
+    background-color: white;
 }
 
 h1 {
-    color: #341539;
+    color: white;
     font-size: 80px;
     padding: 0px;
     margin:0px;
 }
 h2{
-    color: #180a1b;
+    color: white;
     font-size: 16px;
     padding: 0px;
     margin:0px;
@@ -45,7 +48,7 @@ h2{
 button{
     width: 250px;
     height: 55px;
-    background-color:#341539;
+    background-color:#D66853;
     color: white;
     border-width: 0px;
     font-size: 16px;
@@ -53,11 +56,16 @@ button{
     font-weight: bold;
     border-radius: 20px;
     margin: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, background-color 0.2s ease; /* smooth animation */
+
     
     
 }
 button:hover{
-    background-color:#180a1b;
+    transform: scale(1.1); /* grow 10% */
+    background-color:#212D40;
+    cursor: pointer; 
 }
 #programs{
     display: grid;
@@ -67,10 +75,11 @@ button:hover{
 .program{
     width: 320px;
     height:130px;
-    background-color: #341539;
+    background-color: #212D40;
     border-radius: 16px;
     padding: 15px;
     overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 .program h3{
     color:white;
@@ -90,17 +99,18 @@ button:hover{
 .chat-container {
   width: 80vw;
   margin: 30px auto;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   background: white;
   font-family: Arial, sans-serif;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Header */
 .chat-header {
-  background: #341539;
+  background: #D66853;
   color: white;
   padding: 10px;
   font-weight: bold;
@@ -108,6 +118,7 @@ button:hover{
   text-align: center;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Body */
@@ -142,13 +153,16 @@ button:hover{
   white-space: normal;
   padding: 10px 14px;
   border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  
 }
 
 .message.user .bubble {
-  background: #341539;
+  background: #D66853;
   color: white;
   border-bottom-right-radius: 4px;
   text-align: right;
+  
 }
 
 .message.bot .bubble {
@@ -167,7 +181,7 @@ button:hover{
 }
 
 .options button {
-  border: 1px solid #341539;
+  border: 1px solid #212D40;
   background: white;
   color: #341539;
   border-radius: 16px;
@@ -195,6 +209,7 @@ width: 150px; /* Adjust the desired width */
   border: 1px solid #ccc;
   font-size: 16px;      /* keep text size */
   outline: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 
@@ -210,11 +225,25 @@ width: 150px; /* Adjust the desired width */
   padding: 5px 5px;
   border-radius: 100%;
   border: none;
-  background: #341539;
+  background: #D66853;
   color: white;
   cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  
 }
 .chat-input button:hover{
     background-color:#180a1b;
 }
+
+.typing {
+  font-style: italic;
+  opacity: 0.7;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 0.3; }
+  25%, 75% { opacity: 1; }
+}
+
 

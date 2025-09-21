@@ -3,10 +3,11 @@
     top: 0;
     left:  0;
     width: 100%;
-    background-color:#341539;
+    background: linear-gradient(to right,#364156, #212D40);
     display:flex;
     justify-content: right;
     align-items: center;
+    border-bottom: 1px ;
 }
 .nav ul{
     list-style-type: none;
@@ -27,10 +28,10 @@
 }
 
 .nav a:active{
-    background-color: #180a1b;
+    background-color: #D66853;
 }
 .nav a:hover{
-    background-color: #180a1b;
+    background-color: #D66853;
 }
 
 
