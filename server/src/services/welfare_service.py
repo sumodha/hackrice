@@ -162,6 +162,17 @@ class WelfareService:
 
         return out
 
+    def get_programs_by_name_dicts(self, names: List[str], *, include_missing: bool = False) -> List[Dict[str, Any]]:
+        """Return list of programs as plain dictionaries with the same fields as WelfareProgram.
+
+        This method preserves the exact content that would be present on the Pydantic
+        `WelfareProgram` instances but returns plain dicts (useful for JSON serialization
+        or APIs that expect raw dicts).
+        """
+        progs = self.get_programs_by_name(names, include_missing=include_missing)
+        # Use Pydantic's .dict() to produce the same field set and types
+        return [p.dict() for p in progs]
+
 
 def make_service(csv_path: Optional[str | Path] = None, *, db: Optional[DataFrameDB] = None) -> WelfareService:
     return WelfareService(csv_path=csv_path, db=db)

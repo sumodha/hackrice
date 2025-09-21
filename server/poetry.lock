@@ -201,9 +201,26 @@ description = "Composable command line interface toolkit"
 optional = false
 python-versions = ">=3.7"
 groups = ["main"]
+markers = "python_version < \"3.11\""
 files = [
     {file = "click-8.1.8-py3-none-any.whl", hash = "sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2"},
     {file = "click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[[package]]
+name = "click"
+version = "8.3.0"
+description = "Composable command line interface toolkit"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+markers = "python_version >= \"3.11\""
+files = [
+    {file = "click-8.3.0-py3-none-any.whl", hash = "sha256:9b9f285302c6e3064f4330c05f05b81945b2a39544279343e6e7c5f27a9baddc"},
+    {file = "click-8.3.0.tar.gz", hash = "sha256:e7b8232224eba16f4ebe410c25ced9f7875cb5f3263ffc93cc3e8da705e229c4"},
 ]
 
 [package.dependencies]
@@ -240,6 +257,18 @@ typing-extensions = {version = ">=4.6.0", markers = "python_version < \"3.13\""}
 
 [package.extras]
 test = ["pytest (>=6)"]
+
+[[package]]
+name = "filetype"
+version = "1.2.0"
+description = "Infer file type and MIME type of any file/buffer. No external dependencies."
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "filetype-1.2.0-py2.py3-none-any.whl", hash = "sha256:7ce71b6880181241cf7ac8697a2f1eb6a8bd9b429f7ad6d27b8db9ba5f1c2d25"},
+    {file = "filetype-1.2.0.tar.gz", hash = "sha256:66b56cd6474bf41d8c54660347d37afcc3f7d1970648de365c102ef77548aadb"},
+]
 
 [[package]]
 name = "flask"
@@ -299,24 +328,24 @@ beautifulsoup4 = "*"
 
 [[package]]
 name = "google-ai-generativelanguage"
-version = "0.6.15"
+version = "0.7.0"
 description = "Google Ai Generativelanguage API client library"
 optional = false
 python-versions = ">=3.7"
 groups = ["main"]
 files = [
-    {file = "google_ai_generativelanguage-0.6.15-py3-none-any.whl", hash = "sha256:5a03ef86377aa184ffef3662ca28f19eeee158733e45d7947982eb953c6ebb6c"},
-    {file = "google_ai_generativelanguage-0.6.15.tar.gz", hash = "sha256:8f6d9dc4c12b065fe2d0289026171acea5183ebf2d0b11cefe12f3821e159ec3"},
+    {file = "google_ai_generativelanguage-0.7.0-py3-none-any.whl", hash = "sha256:3241215c16e669f37054f6111c84cca50fdb7a8e10a62933b9e68086ce71eefe"},
+    {file = "google_ai_generativelanguage-0.7.0.tar.gz", hash = "sha256:207fed3089949e2e99f7cbd513e2d0ea5f2babdfa5a8f2f239c3ddffe6bd4297"},
 ]
 
 [package.dependencies]
-google-api-core = {version = ">=1.34.1,<2.0.dev0 || >=2.11.dev0,<3.0.0dev", extras = ["grpc"]}
-google-auth = ">=2.14.1,<2.24.0 || >2.24.0,<2.25.0 || >2.25.0,<3.0.0dev"
+google-api-core = {version = ">=1.34.1,<2.0.dev0 || >=2.11.dev0,<3.0.0", extras = ["grpc"]}
+google-auth = ">=2.14.1,<2.24.0 || >2.24.0,<2.25.0 || >2.25.0,<3.0.0"
 proto-plus = [
-    {version = ">=1.25.0,<2.0.0dev", markers = "python_version >= \"3.13\""},
-    {version = ">=1.22.3,<2.0.0dev"},
+    {version = ">=1.25.0,<2.0.0", markers = "python_version >= \"3.13\""},
+    {version = ">=1.22.3,<2.0.0", markers = "python_version < \"3.13\""},
 ]
-protobuf = ">=3.20.2,<4.21.0 || >4.21.0,<4.21.1 || >4.21.1,<4.21.2 || >4.21.2,<4.21.3 || >4.21.3,<4.21.4 || >4.21.4,<4.21.5 || >4.21.5,<6.0.0dev"
+protobuf = ">=3.20.2,<4.21.0 || >4.21.0,<4.21.1 || >4.21.1,<4.21.2 || >4.21.2,<4.21.3 || >4.21.3,<4.21.4 || >4.21.4,<4.21.5 || >4.21.5,<7.0.0"
 
 [[package]]
 name = "google-api-core"
@@ -343,7 +372,7 @@ grpcio-status = [
 ]
 proto-plus = [
     {version = ">=1.25.0,<2.0.0", markers = "python_version >= \"3.13\""},
-    {version = ">=1.22.3,<2.0.0", markers = "python_version < \"3.13\""},
+    {version = ">=1.22.3,<2.0.0"},
 ]
 protobuf = ">=3.19.5,<3.20.0 || >3.20.0,<3.20.1 || >3.20.1,<4.21.0 || >4.21.0,<4.21.1 || >4.21.1,<4.21.2 || >4.21.2,<4.21.3 || >4.21.3,<4.21.4 || >4.21.4,<4.21.5 || >4.21.5,<7.0.0"
 requests = ">=2.18.0,<3.0.0"
@@ -353,25 +382,6 @@ async-rest = ["google-auth[aiohttp] (>=2.35.0,<3.0.0)"]
 grpc = ["grpcio (>=1.33.2,<2.0.0)", "grpcio (>=1.49.1,<2.0.0) ; python_version >= \"3.11\"", "grpcio-status (>=1.33.2,<2.0.0)", "grpcio-status (>=1.49.1,<2.0.0) ; python_version >= \"3.11\""]
 grpcgcp = ["grpcio-gcp (>=0.2.2,<1.0.0)"]
 grpcio-gcp = ["grpcio-gcp (>=0.2.2,<1.0.0)"]
-
-[[package]]
-name = "google-api-python-client"
-version = "2.182.0"
-description = "Google API Client Library for Python"
-optional = false
-python-versions = ">=3.7"
-groups = ["main"]
-files = [
-    {file = "google_api_python_client-2.182.0-py3-none-any.whl", hash = "sha256:a9b071036d41a17991d8fbf27bedb61f2888a39ae5696cb5a326bf999b2d5209"},
-    {file = "google_api_python_client-2.182.0.tar.gz", hash = "sha256:cb2aa127e33c3a31e89a06f39cf9de982db90a98dee020911b21013afafad35f"},
-]
-
-[package.dependencies]
-google-api-core = ">=1.31.5,<2.0.dev0 || >2.3.0,<3.0.0"
-google-auth = ">=1.32.0,<2.24.0 || >2.24.0,<2.25.0 || >2.25.0,<3.0.0"
-google-auth-httplib2 = ">=0.2.0,<1.0.0"
-httplib2 = ">=0.19.0,<1.0.0"
-uritemplate = ">=3.0.1,<5"
 
 [[package]]
 name = "google-auth"
@@ -401,22 +411,6 @@ testing = ["aiohttp (<3.10.0)", "aiohttp (>=3.6.2,<4.0.0)", "aioresponses", "cry
 urllib3 = ["packaging", "urllib3"]
 
 [[package]]
-name = "google-auth-httplib2"
-version = "0.2.0"
-description = "Google Authentication Library: httplib2 transport"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "google-auth-httplib2-0.2.0.tar.gz", hash = "sha256:38aa7badf48f974f1eb9861794e9c0cb2a0511a4ec0679b1f886d108f5640e05"},
-    {file = "google_auth_httplib2-0.2.0-py2.py3-none-any.whl", hash = "sha256:b65a0a2123300dd71281a7bf6e64d65a0759287df52729bdd1ae2e47dc311a3d"},
-]
-
-[package.dependencies]
-google-auth = "*"
-httplib2 = ">=0.19.0"
-
-[[package]]
 name = "google-genai"
 version = "1.38.0"
 description = "GenAI Python SDK"
@@ -441,30 +435,6 @@ websockets = ">=13.0.0,<15.1.0"
 [package.extras]
 aiohttp = ["aiohttp (<4.0.0)"]
 local-tokenizer = ["protobuf", "sentencepiece (>=0.2.0)"]
-
-[[package]]
-name = "google-generativeai"
-version = "0.8.5"
-description = "Google Generative AI High level API client library and tools."
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "google_generativeai-0.8.5-py3-none-any.whl", hash = "sha256:22b420817fb263f8ed520b33285f45976d5b21e904da32b80d4fd20c055123a2"},
-]
-
-[package.dependencies]
-google-ai-generativelanguage = "0.6.15"
-google-api-core = "*"
-google-api-python-client = "*"
-google-auth = ">=2.15.0"
-protobuf = "*"
-pydantic = "*"
-tqdm = "*"
-typing-extensions = "*"
-
-[package.extras]
-dev = ["Pillow", "absl-py", "black", "ipython", "nose2", "pandas", "pytype", "pyyaml"]
 
 [[package]]
 name = "googleapis-common-protos"
@@ -622,20 +592,20 @@ protobuf = ["grpcio-tools (>=1.75.0)"]
 
 [[package]]
 name = "grpcio-status"
-version = "1.71.2"
+version = "1.75.0"
 description = "Status proto mapping for gRPC"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "grpcio_status-1.71.2-py3-none-any.whl", hash = "sha256:803c98cb6a8b7dc6dbb785b1111aed739f241ab5e9da0bba96888aa74704cfd3"},
-    {file = "grpcio_status-1.71.2.tar.gz", hash = "sha256:c7a97e176df71cdc2c179cd1847d7fc86cca5832ad12e9798d7fed6b7a1aab50"},
+    {file = "grpcio_status-1.75.0-py3-none-any.whl", hash = "sha256:de62557ef97b7e19c3ce6da19793a12c5f6c1fbbb918d233d9671aba9d9e1d78"},
+    {file = "grpcio_status-1.75.0.tar.gz", hash = "sha256:69d5b91be1b8b926f086c1c483519a968c14640773a0ccdd6c04282515dbedf7"},
 ]
 
 [package.dependencies]
 googleapis-common-protos = ">=1.5.5"
-grpcio = ">=1.71.2"
-protobuf = ">=5.26.1,<6.0dev"
+grpcio = ">=1.75.0"
+protobuf = ">=6.31.1,<7.0.0"
 
 [[package]]
 name = "h11"
@@ -670,21 +640,6 @@ asyncio = ["anyio (>=4.0,<5.0)"]
 http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
 trio = ["trio (>=0.22.0,<1.0)"]
-
-[[package]]
-name = "httplib2"
-version = "0.31.0"
-description = "A comprehensive HTTP client library."
-optional = false
-python-versions = ">=3.6"
-groups = ["main"]
-files = [
-    {file = "httplib2-0.31.0-py3-none-any.whl", hash = "sha256:b9cd78abea9b4e43a7714c6e0f8b6b8561a6fc1e95d5dbd367f5bf0ef35f5d24"},
-    {file = "httplib2-0.31.0.tar.gz", hash = "sha256:ac7ab497c50975147d4f7b1ade44becc7df2f8954d42b38b3d69c515f531135c"},
-]
-
-[package.dependencies]
-pyparsing = ">=3.0.4,<4"
 
 [[package]]
 name = "httpx"
@@ -869,6 +824,24 @@ pydantic = ">=2.7.4"
 PyYAML = ">=5.3"
 tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<10.0.0"
 typing-extensions = ">=4.7"
+
+[[package]]
+name = "langchain-google-genai"
+version = "2.1.12"
+description = "An integration package connecting Google's genai package and LangChain"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "langchain_google_genai-2.1.12-py3-none-any.whl", hash = "sha256:4c07630419a8fbe7a2ec512c6dea68289663bfe7d5fae0ba431d2cd59a0d0880"},
+    {file = "langchain_google_genai-2.1.12.tar.gz", hash = "sha256:4a98371e545eb97fcdf483086a4aebbb8eceeb9597ca5a9c4c35e92f4fbbd271"},
+]
+
+[package.dependencies]
+filetype = ">=1.2,<2"
+google-ai-generativelanguage = ">=0.7,<1"
+langchain-core = ">=0.3.75"
+pydantic = ">=2,<3"
 
 [[package]]
 name = "langchain-text-splitters"
@@ -1228,23 +1201,21 @@ testing = ["google-api-core (>=1.31.5)"]
 
 [[package]]
 name = "protobuf"
-version = "5.29.5"
+version = "6.32.1"
 description = ""
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "protobuf-5.29.5-cp310-abi3-win32.whl", hash = "sha256:3f1c6468a2cfd102ff4703976138844f78ebd1fb45f49011afc5139e9e283079"},
-    {file = "protobuf-5.29.5-cp310-abi3-win_amd64.whl", hash = "sha256:3f76e3a3675b4a4d867b52e4a5f5b78a2ef9565549d4037e06cf7b0942b1d3fc"},
-    {file = "protobuf-5.29.5-cp38-abi3-macosx_10_9_universal2.whl", hash = "sha256:e38c5add5a311f2a6eb0340716ef9b039c1dfa428b28f25a7838ac329204a671"},
-    {file = "protobuf-5.29.5-cp38-abi3-manylinux2014_aarch64.whl", hash = "sha256:fa18533a299d7ab6c55a238bf8629311439995f2e7eca5caaff08663606e9015"},
-    {file = "protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl", hash = "sha256:63848923da3325e1bf7e9003d680ce6e14b07e55d0473253a690c3a8b8fd6e61"},
-    {file = "protobuf-5.29.5-cp38-cp38-win32.whl", hash = "sha256:ef91363ad4faba7b25d844ef1ada59ff1604184c0bcd8b39b8a6bef15e1af238"},
-    {file = "protobuf-5.29.5-cp38-cp38-win_amd64.whl", hash = "sha256:7318608d56b6402d2ea7704ff1e1e4597bee46d760e7e4dd42a3d45e24b87f2e"},
-    {file = "protobuf-5.29.5-cp39-cp39-win32.whl", hash = "sha256:6f642dc9a61782fa72b90878af134c5afe1917c89a568cd3476d758d3c3a0736"},
-    {file = "protobuf-5.29.5-cp39-cp39-win_amd64.whl", hash = "sha256:470f3af547ef17847a28e1f47200a1cbf0ba3ff57b7de50d22776607cd2ea353"},
-    {file = "protobuf-5.29.5-py3-none-any.whl", hash = "sha256:6cf42630262c59b2d8de33954443d94b746c952b01434fc58a417fdbd2e84bd5"},
-    {file = "protobuf-5.29.5.tar.gz", hash = "sha256:bc1463bafd4b0929216c35f437a8e28731a2b7fe3d98bb77a600efced5a15c84"},
+    {file = "protobuf-6.32.1-cp310-abi3-win32.whl", hash = "sha256:a8a32a84bc9f2aad712041b8b366190f71dde248926da517bde9e832e4412085"},
+    {file = "protobuf-6.32.1-cp310-abi3-win_amd64.whl", hash = "sha256:b00a7d8c25fa471f16bc8153d0e53d6c9e827f0953f3c09aaa4331c718cae5e1"},
+    {file = "protobuf-6.32.1-cp39-abi3-macosx_10_9_universal2.whl", hash = "sha256:d8c7e6eb619ffdf105ee4ab76af5a68b60a9d0f66da3ea12d1640e6d8dab7281"},
+    {file = "protobuf-6.32.1-cp39-abi3-manylinux2014_aarch64.whl", hash = "sha256:2f5b80a49e1eb7b86d85fcd23fe92df154b9730a725c3b38c4e43b9d77018bf4"},
+    {file = "protobuf-6.32.1-cp39-abi3-manylinux2014_x86_64.whl", hash = "sha256:b1864818300c297265c83a4982fd3169f97122c299f56a56e2445c3698d34710"},
+    {file = "protobuf-6.32.1-cp39-cp39-win32.whl", hash = "sha256:68ff170bac18c8178f130d1ccb94700cf72852298e016a2443bdb9502279e5f1"},
+    {file = "protobuf-6.32.1-cp39-cp39-win_amd64.whl", hash = "sha256:d0975d0b2f3e6957111aa3935d08a0eb7e006b1505d825f862a1fffc8348e122"},
+    {file = "protobuf-6.32.1-py3-none-any.whl", hash = "sha256:2601b779fc7d32a866c6b4404f9d42a3f67c5b9f3f15b4db3cccabe06b95c346"},
+    {file = "protobuf-6.32.1.tar.gz", hash = "sha256:ee2469e4a021474ab9baafea6cd070e5bf27c7d29433504ddea1a4ee5850f68d"},
 ]
 
 [[package]]
@@ -1407,21 +1378,6 @@ files = [
 
 [package.dependencies]
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
-
-[[package]]
-name = "pyparsing"
-version = "3.2.4"
-description = "pyparsing - Classes and methods to define and execute parsing grammars"
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "pyparsing-3.2.4-py3-none-any.whl", hash = "sha256:91d0fcde680d42cd031daf3a6ba20da3107e08a75de50da58360e7d94ab24d36"},
-    {file = "pyparsing-3.2.4.tar.gz", hash = "sha256:fff89494f45559d0f2ce46613b419f632bbb6afbdaed49696d322bcf98a58e99"},
-]
-
-[package.extras]
-diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "python-dotenv"
@@ -1690,28 +1646,6 @@ doc = ["reno", "sphinx"]
 test = ["pytest", "tornado (>=4.5)", "typeguard"]
 
 [[package]]
-name = "tqdm"
-version = "4.67.1"
-description = "Fast, Extensible Progress Meter"
-optional = false
-python-versions = ">=3.7"
-groups = ["main"]
-files = [
-    {file = "tqdm-4.67.1-py3-none-any.whl", hash = "sha256:26445eca388f82e72884e0d580d5464cd801a3ea01e63e5601bdff9ba6a48de2"},
-    {file = "tqdm-4.67.1.tar.gz", hash = "sha256:f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2"},
-]
-
-[package.dependencies]
-colorama = {version = "*", markers = "platform_system == \"Windows\""}
-
-[package.extras]
-dev = ["nbval", "pytest (>=6)", "pytest-asyncio (>=0.24)", "pytest-cov", "pytest-timeout"]
-discord = ["requests"]
-notebook = ["ipywidgets (>=6)"]
-slack = ["slack-sdk"]
-telegram = ["requests"]
-
-[[package]]
 name = "typing-extensions"
 version = "4.15.0"
 description = "Backported and Experimental Type Hints for Python 3.9+"
@@ -1737,18 +1671,6 @@ files = [
 
 [package.dependencies]
 typing-extensions = ">=4.12.0"
-
-[[package]]
-name = "uritemplate"
-version = "4.2.0"
-description = "Implementation of RFC 6570 URI Templates"
-optional = false
-python-versions = ">=3.9"
-groups = ["main"]
-files = [
-    {file = "uritemplate-4.2.0-py3-none-any.whl", hash = "sha256:962201ba1c4edcab02e60f9a0d3821e82dfc5d2d6662a21abd533879bdb8a686"},
-    {file = "uritemplate-4.2.0.tar.gz", hash = "sha256:480c2ed180878955863323eea31b0ede668795de182617fef9c6ca09e6ec9d0e"},
-]
 
 [[package]]
 name = "urllib3"
@@ -2134,4 +2056,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9, <4.0"
-content-hash = "1a5e6a6a56de49a13ccfb61b435bd94423fbce0dea78a6eb5a275a9bb39572fa"
+content-hash = "0b935eef0f35ee2306961ec474c294e39e960468314099702f756b8a8c3b4bbc"
