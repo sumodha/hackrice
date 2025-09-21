@@ -3,10 +3,8 @@ from __future__ import annotations
 from typing import List, Optional, Dict, Any
 from pathlib import Path
 import logging
-
 import pandas as pd
 
-from src.services.data_loader import make_db, DataFrameDB
 from src.models.welfare_program import WelfareProgram
 
 logger = logging.getLogger(__name__)
@@ -17,7 +15,6 @@ _DEFAULT_COLUMN_ALIASES: Dict[str, List[str]] = {
     'description': ['description', 'desc', 'summary'],
     'min_age': ['min_age', 'minimum_age'],
     'max_age': ['max_age', 'maximum_age'],
-    'sex': ['sex', 'gender'],
     'citizenship': ['citizenship', 'is_citizen', 'citizen'],
     'address': ['address', 'has_address', 'stable_address'],
     'household_size': ['household_size', 'household'],
@@ -26,7 +23,8 @@ _DEFAULT_COLUMN_ALIASES: Dict[str, List[str]] = {
     'disability_status': ['disability_status', 'disabled'],
     'veteran': ['veteran', 'is_veteran'],
     'criminal_record': ['criminal_record', 'has_criminal_record'],
-    'child': ['child', 'has_child', 'children']
+    'child': ['child', 'has_child', 'children'],
+    'refugee': ['refugee', 'is_refugee']
 }
 
 
@@ -70,13 +68,23 @@ class WelfareService:
         programs = svc.get_programs_by_name(['SNAP', 'Medicaid'])
     """
 
-    def __init__(self, csv_path: Optional[str | Path] = None, *, db: Optional[DataFrameDB] = None):
-        if db is not None:
-            self.db = db
+    def __init__(self, csv_path: Optional[str | Path] = None, *, df: Optional[pd.DataFrame] = None, dtype_map: Optional[Dict[str, str]] = None, parse_dates: Optional[list[str]] = None):
+        """Construct a WelfareService.
+
+        You can provide either a pre-loaded DataFrame via `df` (useful for tests),
+        or a `csv_path` to load directly. `dtype_map` and `parse_dates` are
+        forwarded to the CSV loader for optional coercion.
+        """
+        self._dtype_map = dtype_map
+        self._parse_dates = parse_dates
+        if df is not None:
+            # accept an injected DataFrame (copy to avoid caller mutations)
+            self._df = df.copy(deep=True)
         else:
             if not csv_path:
-                raise ValueError('csv_path is required when db is not provided')
-            self.db = make_db(csv_path)
+                raise ValueError('csv_path is required when df is not provided')
+            self._csv_path = Path(csv_path)
+            self._df = self._load_csv(self._csv_path, dtype_map=dtype_map, parse_dates=parse_dates)
 
     def _find_column(self, df: pd.DataFrame, logical_name: str) -> Optional[str]:
         """Find best matching column name in df for a logical field name."""
@@ -86,6 +94,45 @@ class WelfareService:
             if a.lower() in df_cols:
                 return df_cols[a.lower()]
         return None
+
+    def _default_clean(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Light cleaning similar to DataFrameDB._default_clean: trim strings and normalize empty to NA."""
+        for col in df.select_dtypes(include=['object', 'string']).columns:
+            df[col] = df[col].astype(str).str.strip().replace({'': pd.NA, 'nan': pd.NA})
+        return df
+
+    def _load_csv(self, csv_path: Path, *, dtype_map: Optional[Dict[str, str]] = None, parse_dates: Optional[list[str]] = None) -> pd.DataFrame:
+        if not csv_path.exists():
+            raise FileNotFoundError(f'CSV not found: {csv_path}')
+
+        df = pd.read_csv(csv_path, parse_dates=parse_dates)
+        df = self._default_clean(df)
+
+        # minimal coercion: mirror essential behaviors from DataFrameDB for ints/floats/bools/datetime
+        if dtype_map:
+            for col, typ in dtype_map.items():
+                if col not in df.columns:
+                    logger.warning('Column %s not present in CSV; skipping coercion', col)
+                    continue
+                try:
+                    if typ in ('int', 'integer'):
+                        df[col] = pd.to_numeric(df[col], errors='coerce').astype('Int64')
+                    elif typ in ('float', 'double'):
+                        df[col] = pd.to_numeric(df[col], errors='coerce').astype('float64')
+                    elif typ in ('bool', 'boolean'):
+                        df[col] = df[col].astype(str).str.lower().map({'true': True, 'false': False, 'yes': True, 'no': False, '1': True, '0': False})
+                        df[col] = df[col].astype('boolean')
+                    elif typ in ('datetime', 'date'):
+                        df[col] = pd.to_datetime(df[col], errors='coerce')
+                    elif typ == 'category':
+                        df[col] = df[col].astype('category')
+                    else:
+                        df[col] = df[col].astype('string')
+                except Exception:
+                    logger.exception('Failed to coerce column %s to %s; leaving as string', col, typ)
+                    df[col] = df[col].astype('string')
+
+        return df
 
     def _row_to_model(self, row: pd.Series) -> WelfareProgram:
         # Build kwargs mapping for the WelfareProgram model
@@ -99,18 +146,19 @@ class WelfareService:
         # numeric / optional fields
         kwargs['min_age'] = _to_int(row.get(self._find_column(row.to_frame().T, 'min_age')))
         kwargs['max_age'] = _to_int(row.get(self._find_column(row.to_frame().T, 'max_age')))
-
         # booleans
-        kwargs['sex'] = _to_bool(row.get(self._find_column(row.to_frame().T, 'sex')))
-        # Citizenship: model now expects Optional[bool]; parse accordingly
+        # Citizenship: parse as Optional[bool]
         cit_col = self._find_column(row.to_frame().T, 'citizenship')
         cit_val = row.get(cit_col) if cit_col else None
         kwargs['citizenship'] = _to_bool(cit_val)
 
         kwargs['address'] = _to_bool(row.get(self._find_column(row.to_frame().T, 'address')))
-        # household_size in model is Optional[bool] per model; attempt int then bool
+        # household_size in model is Optional[bool]; parse as boolean-like value
         hs = row.get(self._find_column(row.to_frame().T, 'household_size'))
-        kwargs['household_size'] = _to_bool(hs) if not pd.isna(hs) and isinstance(hs, (str, bool)) else _to_int(hs)
+        kwargs['household_size'] = _to_bool(hs)
+
+        # refugee flag (new in model)
+        kwargs['refugee'] = _to_bool(row.get(self._find_column(row.to_frame().T, 'refugee')))
 
         kwargs['max_monthly_income'] = _to_int(row.get(self._find_column(row.to_frame().T, 'max_monthly_income')))
         kwargs['employment_required'] = _to_bool(row.get(self._find_column(row.to_frame().T, 'employment_required')))
@@ -132,7 +180,7 @@ class WelfareService:
         if not names:
             return []
 
-        df = self.db.get_df()
+        df = self._df.copy(deep=True)
 
         # prepare normalized map of df names to rows
         name_col = self._find_column(df, 'name') or 'name'
@@ -174,5 +222,5 @@ class WelfareService:
         return [p.dict() for p in progs]
 
 
-def make_service(csv_path: Optional[str | Path] = None, *, db: Optional[DataFrameDB] = None) -> WelfareService:
-    return WelfareService(csv_path=csv_path, db=db)
+def make_service(csv_path: Optional[str | Path] = None, *, df: Optional[pd.DataFrame] = None, dtype_map: Optional[Dict[str, str]] = None, parse_dates: Optional[list[str]] = None) -> WelfareService:
+    return WelfareService(csv_path=csv_path, df=df, dtype_map=dtype_map, parse_dates=parse_dates)

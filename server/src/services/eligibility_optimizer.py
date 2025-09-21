@@ -8,18 +8,27 @@ class WelfareProgramEligibilityOptimizer:
     for social welfare programs.
     """
 
-    def __init__(self, eligibility_data_path='/Users/stevenzhang/Downloads/Eligibility_Data.csv', field_weights=None):
+    def __init__(self, eligibility_data_path: str = None, field_weights=None, df: pd.DataFrame = None):
         """
         Initializes the optimizer with eligibility data and optional field weights.
 
         Args:
-            eligibility_data_path (str): Path to the CSV file containing eligibility data.
+            eligibility_data_path (str): Path to the CSV file containing eligibility data. If
+                `df` is provided this path is ignored.
+            df (pd.DataFrame): Optional DataFrame to use directly instead of reading CSV.
             field_weights (dict): A dictionary mapping field names to weights (float).
             If None, all fields have a weight of 1.0.
         """
-        self.df = pd.read_csv(eligibility_data_path)
-        # Set the program name as the index for easier filtering
-        self.df.set_index('program', inplace=True)
+        if df is not None:
+            self.df = df.copy()
+        elif eligibility_data_path:
+            self.df = pd.read_csv(eligibility_data_path)
+        else:
+            raise ValueError("Either 'df' or 'eligibility_data_path' must be provided to initialize the optimizer")
+
+        # Set the program name as the index for easier filtering (if present)
+        if 'program' in self.df.columns:
+            self.df.set_index('program', inplace=True)
 
         # Store all fields (columns)
         self.all_fields = set(self.df.columns)
