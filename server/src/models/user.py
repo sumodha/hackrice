@@ -7,7 +7,7 @@ class User(BaseModel):
     income: Optional[int] = None
     household_size: Optional[int] = None
     sex: Optional[bool] = None
-    citizenship: list[bool]
+    citizenship: Optional[bool] = None 
     address: Optional[bool] = None
     monthly_income: Optional[int] = None
     employment: Optional[bool] = None
