@@ -63,6 +63,26 @@ const HomePage = () => {
 
         setPrograms(data.programs);
 
+        try {
+            const response = await fetch(`http://localhost:5000/api/stage`, {
+      method: "GET",
+      headers: { "Authorization": "" }, 
+    });
+    if (!response.ok) {
+      console.log("HTTP Error! Status: " + response.status);
+      return;
+    }
+     const data = await response.json();
+      if (data.stage == "b") {
+          setStageB(true);
+      }
+
+
+
+        } catch (err) {
+          console.log("Fetch Error" + err);
+        }
+
       } catch (err) {
         console.log("Fetch Error" + err);
       }
