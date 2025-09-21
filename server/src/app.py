@@ -1,19 +1,28 @@
 import os
 from google import genai
-
+from google.genai import types
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
+from services import chat_bot
 
 # APIs
 load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key = GEMINI_API_KEY)
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+client = genai.Client(api_key=GOOGLE_API_KEY)
+
+if "GOOGLE_API_KEY" not in os.environ:
+    raise ValueError("FATAL: GOOGLE_API_KEY environment variable not set. Please create a .env file and add your key.")
 
 # Create an instance of the Flask class
 app = Flask(__name__)
 CORS(app)
+chat_sessions = {}
+
+# globla varaible to track chat history:
+chat_history = []
+
 
 ###################
 ## API ENDPOINTS ##
@@ -42,6 +51,7 @@ def chat():
     return jsonify({"response": data.get('text')})
 
 
+
 # Chat with gemini
 @app.route('/api/gemini', methods=['POST'])
 def gemini_chat():
@@ -53,8 +63,12 @@ def gemini_chat():
 
     response = client.models.generate_content(
         model="gemma-3-27b-it", 
-        contents=prompt
+        contents= "chat history: " ",".join(chat_history) + "new prompt: " + prompt
     )
+
+    # update chat history
+    chat_history.append("user: " + prompt)
+    chat_history.append("computer: " + response.text)
 
     # return text response
     return jsonify({"response": response.text})
