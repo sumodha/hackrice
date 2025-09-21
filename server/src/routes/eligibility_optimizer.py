@@ -26,10 +26,25 @@ class WelfareProgramEligibilityOptimizer:
 
         # Set default weights if none provided
         if field_weights is None:
-            self.field_weights = {field: 1.0 for field in self.all_fields}
+            self.field_weights = {
+                'is_only_for_citizens_and_lawful_residents': 0.5,  # Half as important
+                'household_size_considered': 1.5,  # 50% more important
+                'employment_required': 1.2,  # Slightly more important
+                'is_veteran': 1.1,  # Slightly less important
+                'is_for_children' : 1.2,
+                'criminal_record_disqualifying' : 1.2
+        }
         else:
             # Ensure all fields have a weight, defaulting to 1.0 if not specified
-            self.field_weights = {field: field_weights.get(field, 1.0) for field in self.all_fields}
+            self.field_weights = custom_weights = {
+            'is_only_for_citizens_and_lawful_residents': 0.5,  # Half as important
+            'household_size_considered': 1.5,  # 50% more important
+            'employment_required': 1.2,  # Slightly more important
+            'is_veteran': 1.1,  # Slightly less important
+            'is_for_children' : 1.2,
+            'criminal_record_disqualifying' : 1.2
+
+            }
 
     def _apply_blacklists(self, field_blacklist, program_blacklist):
         """
