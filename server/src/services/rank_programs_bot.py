@@ -4,17 +4,17 @@ class RankProgramsBot:
     """
     A bot that ranks welfare programs based on user eligibility and preferences.
     """
-    def __init__(self, df=None, program_blacklist=None, user=None):
+    def __init__(self, df=None, program_whitelist=None, user=None):
         """
         Initialize the RankProgramsBot.
 
         Args:
             df (pd.DataFrame): DataFrame of welfare programs (rows = programs).
-            program_blacklist (list[str]): List of program names to exclude.
+            program_whitelist (list[str]): List of program names to include.
         """
 
         self.user = user_model.User() if user is None else user
-        programs_ranking = {}
+        self.programs_ranking = {}
         # Lazy import to avoid circular imports at module load time
         import pandas as pd
 
@@ -24,23 +24,23 @@ class RankProgramsBot:
             # copy to avoid mutating caller's df
             self.df = df.copy()
 
-        if program_blacklist is None:
-            program_blacklist = []
+        if program_whitelist is None:
+            program_whitelist = []
 
-        # Normalize blacklist to strings
-        program_blacklist = [str(x).strip() for x in program_blacklist]
+        # Normalize whitelist to strings
+        program_whitelist = [str(x).strip() for x in program_whitelist]
 
         # Attempt to determine program identifier column (index named 'program', column 'program', or first column)
         if hasattr(self.df, 'index') and self.df.index.name == 'program':
             # filter by index
-            self.filtered_df = self.df.drop(index=[p for p in program_blacklist if p in self.df.index], errors='ignore')
+            self.filtered_df = self.df.loc[[p for p in program_whitelist if p in self.df.index]]
         else:
             # Try 'program' column
             if 'program' in self.df.columns:
-                self.filtered_df = self.df[~self.df['program'].astype(str).isin(program_blacklist)].copy()
+                self.filtered_df = self.df[self.df['program'].astype(str).isin(program_whitelist)].copy()
             elif len(self.df.columns) > 0:
                 first_col = self.df.columns[0]
-                self.filtered_df = self.df[~self.df[first_col].astype(str).isin(program_blacklist)].copy()
+                self.filtered_df = self.df[self.df[first_col].astype(str).isin(program_whitelist)].copy()
             else:
                 self.filtered_df = self.df.copy()
 
@@ -49,7 +49,7 @@ class RankProgramsBot:
             self.filtered_df = pd.DataFrame(self.filtered_df)
             
             
-        def rank_programs(self, programs_ranking):
+        def rank_programs(self):
             """
             Rank welfare programs based on user eligibility and preferences.
 
@@ -115,5 +115,7 @@ class RankProgramsBot:
                 if self.user.is_refugee is not None and is_for_refugees is not None:
                     if self.user.is_refugee != is_for_refugees:
                         score += 100
-                programs_ranking[program_name] = score
-            return programs_ranking
+                if score > 0:
+                    
+                    self.programs_ranking[program_name] = score
+            return [k for k, v in sorted(self.programs_ranking.items(), key=lambda x: x[1], reverse=True)]

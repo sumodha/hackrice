@@ -14,8 +14,8 @@ class User(BaseModel):
     has_children: Optional[bool] = None
     is_refugee: Optional[bool] = None
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self):
+        print("hi")
 
     def set_field(self, field_name: str, value) -> None:
         """

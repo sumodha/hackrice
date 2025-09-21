@@ -1,12 +1,17 @@
 import os
 import json
+import pandas as pd
+
+
 from google import genai
 from google.genai import types
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-from services import chat_bot
+from services import stochastic_query
+from services import rank_programs_bot
+from models import user
 
 # APIs
 load_dotenv()
@@ -37,6 +42,11 @@ stage_var = "a" ## must be a or b
 ## Global variables for Stage B
 stage_b_history = ""
 stage_b_potentials = []
+query_user = stochastic_query.query_user()
+stage_b_questions_asked = 0
+programs_df = pd.read_csv("data/All_Programs_Data.csv")
+my_user = user.User()
+
 
 
 ###################
@@ -66,8 +76,7 @@ def chat():
     return jsonify({"response": input_data.get('text')})
 
 
-
-# Chat with gemini
+# Stage a logic
 @app.route('/api/chat/a', methods=['POST'])
 def stage_a_chat():
     global chat_a_history, chat_a_questions_asked, stage_var, stage_b_potentials, stage_b_history, chat_a_switch
@@ -122,6 +131,45 @@ def stage_a_chat():
 
     # return text response
     return jsonify({"text": response.text.strip(), "programs" : []})
+
+
+# Stage B logic
+@app.route('/api/chat/b', methods=['POST'])
+def stage_b_chat():
+    global query_user, stage_b_questions_asked, programs_df, stage_b_potentials, my_user
+
+    input_data = request.json
+    answer = input_data.get("text", "")
+
+    # add answer to query user's string context
+    query_user.update_responses(f"User: {answer}; ")
+
+
+    if stage_b_questions_asked > 5:
+        rank_bot = rank_programs_bot.RankProgramsBot(programs_df, stage_b_potentials, my_user)
+        ranked_programs = rank_bot.rank_programs()
+
+        # 4. Parse response for frontend
+        f_programs = []
+        for prog in ranked_programs:
+            f_programs.append({"name" : prog.strip("'"),
+                             "description" : data.get(prog.strip("'"), "")})
+            
+
+        return jsonify({"text": "Programs are listed in order of elgibility:", "programs": f_programs})
+
+    # ask next question
+    question = query_user.next_question()
+    print("question", question)
+
+    # add question to string context
+    query_user.update_responses(f"model: {question}; ")
+
+    stage_b_questions_asked += 1
+
+    return jsonify({"text": question, "programs": []})
+
+    
 
 # send stage route
 @app.route("/api/stage", methods=["GET"])

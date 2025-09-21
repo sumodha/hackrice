@@ -27,6 +27,7 @@ class WelfareProgramEligibilityBot:
         self.df = None
         self.program_blacklist = []
         self.field_blacklist = []
+        self.user = User()
 
         # If optimizer not provided, construct it with the provided df/path
         if optimizer is not None:
@@ -102,21 +103,15 @@ class WelfareProgramEligibilityBot:
 
         return None
 
-    def parse_user_from_transcript(self, transcript: str) -> User:
+    def parse_user_from_transcript(self, transcript: str) -> None:
         """
-        Parse an aggregated transcript string using Gemma and populate a User instance.
+        Parse an aggregated transcript string using Gemma and populate the instance's User object.
 
         Args:
             transcript (str): Aggregated user Q&A or free-text responses.
-
-        Returns:
-            User: A User instance with any fields populated that Gemma could extract.
         """
-        # Create an empty User instance
-        user = User()
-
         if not transcript or not transcript.strip():
-            return user
+            return
 
         # Build prompt to ask Gemma to extract only the known User fields as JSON
         user_fields = [
@@ -145,8 +140,8 @@ class WelfareProgramEligibilityBot:
         load_dotenv()
         GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
         if not GEMINI_API_KEY:
-            # No API key: can't call Gemma; return the empty User
-            return user
+            # No API key: can't call Gemma; return early
+            return
 
         client = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -159,7 +154,7 @@ class WelfareProgramEligibilityBot:
 
             m = re.search(r"\{[\s\S]*\}", text)
             if not m:
-                return user
+                return
 
             parsed = json.loads(m.group(0))
 
@@ -167,10 +162,10 @@ class WelfareProgramEligibilityBot:
             populated_keys = []
             for k, v in parsed.items():
                 try:
-                    if hasattr(user, 'set_field'):
-                        user.set_field(k, v)
+                    if hasattr(self.user, 'set_field'):
+                        self.user.set_field(k, v)
                     else:
-                        setattr(user, k, v)
+                        setattr(self.user, k, v)
                     populated_keys.append(k)
                 except Exception:
                     # ignore invalid fields or values
@@ -189,10 +184,8 @@ class WelfareProgramEligibilityBot:
             except Exception:
                 pass
         except Exception:
-            # On any error, return the user as-is
-            return user
-
-        return user
+            # On any error, return without modification
+            return
 
     def get_next_field(self, field_blacklist=None, program_blacklist=None):
         """
@@ -281,22 +274,17 @@ class WelfareProgramEligibilityBot:
             # On any error, return a simple fallback question
             return f"What is your {field}?"
 
-    def ask_questions(self, user: User, field_blacklist=None, program_blacklist=None, num_questions: int = 4):
+    def ask_questions(self, field_blacklist=None, program_blacklist=None, num_questions: int = 4):
         """
     Ask `num_questions` questions by repeatedly calling `ask_next_field_with_gemma`,
     collect the user's answers into a running string, then call Gemma to map
-    collected answers into the target schema. Update the provided `User` instance
+    collected answers into the target schema. Update the instance's User object
     with any fields that have values using `user.set_field(field_name, value)`.
 
         Args:
-            user (User): A `User` model instance to be updated with populated fields.
             field_blacklist (list): Fields already asked.
             program_blacklist (list): Programs already excluded.
             num_questions (int): Number of questions to ask (default 4).
-
-        Returns:
-            dict: The subset of fields populated by the AI (only keys with values). The
-            provided `user` object is also updated in-place.
         """
         if field_blacklist is None:
             field_blacklist = []
@@ -396,8 +384,8 @@ class WelfareProgramEligibilityBot:
         load_dotenv()
         GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
         if not GEMINI_API_KEY:
-            # No API key: return empty dict and do not modify all_user_fields
-            return {}
+            # No API key: return early without modification
+            return
 
         client = genai.Client(api_key=GEMINI_API_KEY)
         try:
@@ -419,28 +407,13 @@ class WelfareProgramEligibilityBot:
                 for k, v in parsed.items():
                     if k in target_fields and v is not None and v != "":
                         populated[k] = v
-                        # Update provided User instance using set_field where possible
+                        # Update instance User object using set_field where possible
                         try:
-                            # Use user.set_field to assign values; this will safely ignore unknown fields
-                            user.set_field(k, v)
+                            # Use self.user.set_field to assign values; this will safely ignore unknown fields
+                            self.user.set_field(k, v)
                         except Exception:
                             # If updating fails, ignore and continue
                             pass
         except Exception:
-            # On error, return whatever we've collected so far
-            return {}
-
-        return populated
-
-        client = genai.Client(api_key=GEMINI_API_KEY)
-
-        try:
-            response = client.models.generate_content(
-                model="gemma-3-27b-it",
-                contents=prompt,
-            )
-            # response.text is used elsewhere in the project
-            return getattr(response, "text", str(response))
-        except Exception:
-            # On any error, return a simple fallback question
-            return f"What is your {field}?"
+            # On error, return without modification
+            return
