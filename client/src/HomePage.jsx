@@ -16,7 +16,7 @@ const HomePage = () => {
   const programsRef = useRef(null);
 
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "“Hello! Welcome to CareNet, I can help you find programs, answer questions about eligibility, and guide you through resources. How can I help you today?”" }
+    { sender: "bot", text: "Hello! Welcome to CareNet, I can help you find programs, answer questions about eligibility, and guide you through resources. How can I help you today?" }
   ]);
   const [input, setInput] = useState("");
   
