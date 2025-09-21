@@ -10,8 +10,8 @@ const HomePage = () => {
     {name: "program 3", description: "descitpion 3"}, 
     {name: "program 3", description: "descitpion 3"}
   ]);
-  const [showStageB, setStageB] = useState(false);
-  const [showPrograms, setShowPrograms] = useState(false);
+  const [showStageB, setStageB] = useState(true);
+  const [showPrograms, setShowPrograms] = useState(true);
   const [eligibility, setEligibility] = useState(false);
   const programsRef = useRef(null);
 
@@ -162,7 +162,8 @@ const HomePage = () => {
     if (!eligibility){
       setEligibility(true);
       const botMessage = { sender: "bot", text: "Now, I will start asking questions regard your eligibility." };
-      setMessages((prev) => [...prev, botMessage]);
+      const botMessage2 = { sender: "bot", text: "What's your income?" };
+      setMessages((prev) => [...prev, botMessage, botMessage2]);
     }
     else{
       const botMessage = { sender: "bot", text: "I am currently asking questions regarding your eligibility. "};

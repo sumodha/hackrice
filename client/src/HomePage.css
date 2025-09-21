@@ -19,7 +19,23 @@
     justify-content: center;  /* centers heading horizontally */
     align-items: center;      /* centers heading vertically */
     text-align: center;
-    background: linear-gradient(to right,#364156, #212D40);
+    /* Background layers: gradient on top, image underneath */
+  background: linear-gradient(to right, #364156, #212D40);
+
+}
+#main-image {
+  width: 60%;              /* make it take part of the width */
+  max-width: 600px;        /* don’t let it grow too large */
+  border-radius: 24px;     /* rounded corners */
+  overflow: hidden;        /* crop inside corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  margin-bottom: 20px;     /* space under image */
+}
+
+#main-image img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 #chat {
     min-height: 100vh;    /* full page */
@@ -233,7 +249,7 @@ width: 150px; /* Adjust the desired width */
   
 }
 .chat-input button:hover{
-    background-color:#180a1b;
+    background-color:#212D40;
 }
 
 .typing {
