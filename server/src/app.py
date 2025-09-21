@@ -29,6 +29,9 @@ CORS(app)
 with open("data/social_welfare_programs.json", "r") as f:
     data = json.load(f)
 
+with open("data/social_links.json", "r") as f:
+    data_link = json.load(f)
+
 chat_a_history = []
 chat_a_sessions = {}
 chat_a_questions_asked = 0
@@ -46,6 +49,7 @@ query_user = stochastic_query.query_user()
 stage_b_questions_asked = 0
 programs_df = pd.read_csv("data/All_Programs_Data.csv")
 my_user = user.User()
+emergency = []
 
 
 
@@ -79,7 +83,7 @@ def chat():
 # Stage a logic
 @app.route('/api/chat/a', methods=['POST'])
 def stage_a_chat():
-    global chat_a_history, chat_a_questions_asked, stage_var, stage_b_potentials, stage_b_history, chat_a_switch
+    global chat_a_history, chat_a_questions_asked, stage_var, stage_b_potentials, stage_b_history, chat_a_switch, emergency
 
     input_data = request.json
     prompt = input_data.get("text", "")
@@ -111,11 +115,12 @@ def stage_a_chat():
         pot_progs = []
         for prog in output:
             pot_progs.append({"name" : prog.strip("'"),
-                             "description" : data.get(prog.strip("'"), "")})
+                             "description" : data.get(prog.strip("'"), ""),
+                             "link" : data_link.get(prog.strip("'"),"")})
             
-        chat_a_switch += response.text[1:-1]
-        chat_a_switch += "\n\n\n Use the buttons below to A. Check elgibility for each program or B. View programs in more detail"
+        chat_a_switch += "\n\n\n Click buttons to view programs in more detail and check elgibility!"
         print(pot_progs)
+        emergency = pot_progs
         return jsonify({"text": chat_a_switch, "programs" : pot_progs})
     
 
@@ -136,7 +141,7 @@ def stage_a_chat():
 # Stage B logic
 @app.route('/api/chat/b', methods=['POST'])
 def stage_b_chat():
-    global query_user, stage_b_questions_asked, programs_df, stage_b_potentials, my_user
+    global query_user, stage_b_questions_asked, programs_df, stage_b_potentials, my_user, emergency
 
     input_data = request.json
     answer = input_data.get("text", "")
@@ -146,6 +151,17 @@ def stage_b_chat():
 
 
     if stage_b_questions_asked > 5:
+        ## update my user
+        user_fields = ["age", "citizen_or_lawful_resident", "has_permanent_address", "lives_with_people", "monthly_income", "employed", "disabled", "is_veteran", "has_criminal_record", "has_children", "is_refugee"]
+        all_user_responses = query_user.get_all_responses()
+        user_fill_response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents= f"chat history: {all_user_responses}" + "\n" + f"Fields: {", ".join(user_fields)}" + "\n" + f'Task: create a JSON where every field is a string key that matches to a string value extracted from the chat history. monthly income should be an int (represented with a string), and every other field should be a boolean (represented with a string). Only return this output json and nothing else (example, no ``` or ```json). Do not include an extra headers or symbols that are not the JSON itself. Example output: {{"employed" : "False", "monthly_income" : "100"}}'
+        )
+
+        print(user_fill_response.text)
+        my_user.set_fields(json.loads(user_fill_response.text))
+
         rank_bot = rank_programs_bot.RankProgramsBot(programs_df, stage_b_potentials, my_user)
         ranked_programs = rank_bot.rank_programs()
 
@@ -153,9 +169,14 @@ def stage_b_chat():
         f_programs = []
         for prog in ranked_programs:
             f_programs.append({"name" : prog.strip("'"),
-                             "description" : data.get(prog.strip("'"), "")})
+                             "description" : data.get(prog.strip("'"), ""),
+                             "link" : data_link.get(prog.strip("'"), "")})
             
-
+        my_user.print_all_fields()
+        print(f_programs)
+        if len(f_programs) == 0:
+            f_programs = emergency[:len(emergency)//2]
+            print(stage_b_potentials)
         return jsonify({"text": "Programs are listed in order of elgibility:", "programs": f_programs})
 
     # ask next question

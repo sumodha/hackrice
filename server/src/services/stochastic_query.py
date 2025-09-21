@@ -170,3 +170,6 @@ class query_user:
     def update_responses(self, input_str): 
         self.all_responses += str(input_str)
 
+    def get_all_responses(self):
+        return self.all_responses
+

@@ -90,11 +90,15 @@ button:hover{
 }
 .program{
     width: 320px;
-    height:190px;
+    height:70px;
     background-color: #212D40;
     border-radius: 16px;
     padding: 15px;
     overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 .program h3{

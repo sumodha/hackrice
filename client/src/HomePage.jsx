@@ -5,13 +5,9 @@ import {useState, useRef, useEffect} from 'react';
 const HomePage = () => {
   const chatRef = useRef(null); // ref to the chat section
   const [isTyping, setIsTyping] = useState(false);
-  const [programs, setPrograms] = useState([{name: "program 1", description: "description 1"}, 
-    {name: "program 2", description: "description 2"}, 
-    {name: "program 3", description: "descitpion 3"}, 
-    {name: "program 3", description: "descitpion 3"}
-  ]);
-  const [showStageB, setStageB] = useState(true);
-  const [showPrograms, setShowPrograms] = useState(true);
+  const [programs, setPrograms] = useState([]);
+  const [showStageB, setStageB] = useState(false);
+  const [showPrograms, setShowPrograms] = useState(false);
   const [eligibility, setEligibility] = useState(false);
   const programsRef = useRef(null);
 
@@ -34,46 +30,46 @@ const HomePage = () => {
     const sendMessageBackend = async (input) => {
       try {
         setIsTyping(true); // start typing indicator
-      const response = await fetch(`http://localhost:5000/api/stage`, {
+      const resStage = await fetch(`http://localhost:5000/api/stage`, {
       method: "GET",
       headers: { "Authorization": "" }, 
     });
-    if (!response.ok) {
-      console.log("HTTP Error! Status: " + response.status);
+    if (!resStage.ok) {
+      console.log("HTTP Error! Status: " + resStage.status);
       return;
     }
-    const data = await response.json();
+    const dataStage = await resStage.json();
 
 
-    if (data.stage === "a") {
+    if (dataStage.stage === "a") {
         try{
-        const response = await fetch(`http://localhost:5000/api/chat/a`, {
+        const resA = await fetch(`http://localhost:5000/api/chat/a`, {
         method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({ text : input }),
         });
-        if (!response.ok) {
-        console.log("HTTP Error! Status: " + response.status);
+        if (!resA.ok) {
+        console.log("HTTP Error! Status: " + resA.status);
         return;
         }
-        const data = await response.json();
+        const dataA = await resA.json();
 
-        const botMessage = { sender: "bot", text: data.text };
+        const botMessage = { sender: "bot", text: dataA.text };
         setMessages((prev) => [...prev, botMessage]);
 
-        setPrograms(data.programs);
+        setPrograms(dataA.programs);
 
         try {
-            const response = await fetch(`http://localhost:5000/api/stage`, {
+            const resStage2 = await fetch(`http://localhost:5000/api/stage`, {
       method: "GET",
       headers: { "Authorization": "" }, 
     });
-    if (!response.ok) {
-      console.log("HTTP Error! Status: " + response.status);
+    if (!resStage2.ok) {
+      console.log("HTTP Error! Status: " + resStage2.status);
       return;
     }
-     const data = await response.json();
-      if (data.stage == "b") {
+     const dataStage2 = await resStage2.json();
+      if (dataStage2.stage == "b") {
           setStageB(true);
       }
 
@@ -89,22 +85,22 @@ const HomePage = () => {
     } 
     else { // data.stage = "b"
         try{
-        const res = await fetch('http://localhost:5000/api/chat/b', {
+        const resB = await fetch('http://localhost:5000/api/chat/b', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
        body: JSON.stringify({ text : input }),
         });
-        if (!response.ok) {
-        console.log("HTTP Error! Status: " + response.status);
+        if (!resB.ok) {
+        console.log("HTTP Error! Status: " + resB.status);
         return;
       }
       setStageB(true);
-      const data = await response.json();
+      const dataB = await resB.json();
 
-      const botMessage = { sender: "bot", text: data.text };
+      const botMessage = { sender: "bot", text: dataB.text };
       setMessages((prev) => [...prev, botMessage]);
 
-      setPrograms(data.programs);
+      setPrograms(dataB.programs);
       
 
 
@@ -230,11 +226,10 @@ const HomePage = () => {
               </div>}
             {showPrograms && <div id = "programs-container">
               <h1 id="programs-header" ref={programsRef}>Programs</h1>
-              <div id="programs"> 
+              <div  id="programs"> 
               {programs.map((element, idx) => 
-              <div className="program"> 
+              <div onClick={() => window.open(element.link, "_blank")}  className="program"> 
                 <h3>{element.name}</h3>
-                <p>{element.description}</p>
               </div>
               
               )}
