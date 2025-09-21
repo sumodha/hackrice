@@ -154,6 +154,7 @@ button:hover{
   padding: 10px 14px;
   border-radius: 16px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  white-space: pre-wrap;
   
 }
 
