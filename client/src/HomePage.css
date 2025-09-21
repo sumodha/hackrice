@@ -214,4 +214,7 @@ width: 150px; /* Adjust the desired width */
   color: white;
   cursor: pointer;
 }
+.chat-input button:hover{
+    background-color:#180a1b;
+}
 
