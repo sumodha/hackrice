@@ -1,0 +1,173 @@
+{
+  "Medicaid": "Medicaid is a joint federal and state program that provides health coverage to low-income individuals and families, including pregnant women, children, elderly adults, and people with disabilities. The program covers essential health services including hospital stays, physician services, prescription drugs, and long-term care.",
+  
+  "Children's Health Insurance Program (CHIP)": "CHIP provides low-cost health coverage to children in families that earn too much money to qualify for Medicaid but cannot afford private insurance. The program covers routine check-ups, immunizations, doctor visits, prescriptions, dental and vision care, and emergency services.",
+  
+  "Medicare Part A": "Medicare Part A is hospital insurance that covers inpatient hospital stays, skilled nursing facility care, hospice care, and some home health care services. Most people don't pay a monthly premium for Part A if they or their spouse paid Medicare taxes while working.",
+  
+  "Medicare Part B": "Medicare Part B is medical insurance that covers medically necessary services like doctor visits, outpatient care, medical supplies, and preventive services. Beneficiaries typically pay a monthly premium and annual deductible for Part B coverage.",
+  
+  "Medicare Part C (Medicare Advantage)": "Medicare Advantage plans are private insurance alternatives to traditional Medicare that include Part A, Part B, and usually Part D prescription drug coverage. These plans often provide additional benefits like vision, dental, or wellness programs not covered by traditional Medicare.",
+  
+  "Medicare Part D": "Medicare Part D provides prescription drug coverage through private insurance companies approved by Medicare. Beneficiaries pay monthly premiums, annual deductibles, and copayments or coinsurance for covered medications.",
+  
+  "Medicare Part D Low-Income Subsidy (Extra Help)": "Extra Help is a Medicare program that helps people with limited income and resources pay for prescription drug costs under Medicare Part D. The program can pay for monthly premiums, annual deductibles, and copayments for covered medications.",
+  
+  "Ryan White HIV/AIDS Program": "The Ryan White HIV/AIDS Program provides comprehensive HIV care, treatment, and support services to low-income people living with HIV who are uninsured or underinsured. The program funds medical care, medications, mental health services, substance abuse treatment, and housing assistance.",
+  
+  "Title X Family Planning Services": "Title X is the nation's family planning program that provides reproductive health care services to low-income individuals regardless of insurance status. Services include contraceptive counseling, STD testing and treatment, cancer screenings, and pregnancy testing and counseling.",
+  
+  "Transitional Cash and Medical Services": "This program provides temporary financial assistance and medical coverage to refugees, asylees, and other eligible immigrants during their first months in the United States. Benefits typically include cash assistance for basic needs and medical coverage until individuals can access other programs or become self-sufficient.",
+  
+  "Housing Opportunities for Persons with AIDS (HOPWA)": "HOPWA provides housing assistance and related supportive services to low-income persons living with HIV/AIDS and their families. The program helps prevent homelessness and provides stable housing through rental assistance, housing facilities, and supportive services.",
+  
+  "Temporary Assistance for Needy Families (TANF)": "TANF provides temporary financial assistance to needy families with dependent children while helping parents find employment and achieve self-sufficiency. The program includes cash assistance, work preparation activities, child care, and other support services with time limits on benefits.",
+  
+  "Supplemental Security Income (SSI)": "SSI provides monthly cash payments to elderly, blind, or disabled individuals with limited income and resources. The program ensures a minimum level of income for people who cannot work due to age or disability and have little or no other financial support.",
+  
+  "Social Security Disability Insurance (SSDI)": "SSDI provides monthly cash benefits to workers who become disabled and cannot work, based on their previous work history and Social Security tax contributions. Benefits are also available to certain family members of disabled workers, including spouses and dependent children.",
+  
+  "Social Security Retirement Benefits": "Social Security retirement benefits provide monthly payments to workers who have reached retirement age and have earned sufficient work credits through Social Security tax contributions. Benefits are calculated based on lifetime earnings and the age at which a person begins receiving benefits.",
+  
+  "Social Security Survivor Benefits": "Survivor benefits provide monthly payments to eligible family members of deceased workers who paid into Social Security. These benefits can go to widows, widowers, children, and in some cases parents or other dependents of the deceased worker.",
+  
+  "Unemployment Insurance": "Unemployment insurance provides temporary wage replacement benefits to workers who lose their jobs through no fault of their own and meet eligibility requirements. The program helps unemployed workers maintain basic financial stability while they search for new employment.",
+  
+  "Veterans Disability Compensation": "Veterans disability compensation provides tax-free monthly payments to veterans who were injured or became ill due to their military service. The amount of compensation is based on the severity of the disability and its impact on the veteran's ability to work and function.",
+  
+  "Veterans Pension": "Veterans pension provides monthly payments to wartime veterans aged 65 or older, or those who are permanently disabled, who meet income and asset limits. This need-based program supplements income for veterans who served during wartime but may not qualify for disability compensation.",
+  
+  "Aid to Families with Dependent Children (AFDC)": "AFDC was a federal assistance program that provided cash payments to needy families with children, replaced by TANF in 1996. The program provided monthly cash assistance to single-parent families and two-parent families where the primary breadwinner was unemployed.",
+  
+  "Earned Income Tax Credit (EITC)": "The EITC is a refundable tax credit for low- to moderate-income working individuals and families, particularly those with children. The credit reduces the amount of tax owed and may result in a refund even if no tax is owed, effectively supplementing wages for working families.",
+  
+  "Additional Child Tax Credit (ACTC)": "The ACTC is a refundable portion of the Child Tax Credit that allows eligible families to receive money back even if they owe no federal income tax. This credit helps low-income working families with children by providing additional financial support beyond what they might receive from the standard Child Tax Credit.",
+  
+  "Child Tax Credit (CTC)": "The CTC provides tax relief to families with qualifying children under age 17 by reducing their federal income tax liability. The credit can be partially refundable, meaning eligible families may receive money back even if they don't owe taxes.",
+  
+  "Premium Tax Credits (ACA)": "Premium tax credits help individuals and families with moderate incomes afford health insurance purchased through Health Insurance Marketplaces. The credits are based on income and can be applied in advance to reduce monthly premium costs or claimed when filing taxes.",
+  
+  "Supplemental Nutrition Assistance Program (SNAP)": "SNAP provides nutrition benefits to supplement the food budget of low-income families so they can purchase healthy food and move toward self-sufficiency. Benefits are provided through electronic benefit transfer (EBT) cards that work like debit cards at authorized retailers.",
+  
+  "Child and Adult Care Food Program (CACFP)": "CACFP provides healthy meals and snacks to children and adults in qualifying day care centers, family day care homes, and adult day care centers. The program helps ensure that participants receive nutritious meals while reducing food costs for care providers and families.",
+  
+  "The Emergency Food Assistance Program (TEFAP)": "TEFAP provides emergency food assistance to low-income Americans through food banks and other local agencies that serve those in need. The program distributes both commodity foods and cash to help organizations purchase additional food for distribution to hungry individuals and families.",
+  
+  "SNAP-Ed Nutrition Education": "SNAP-Ed provides nutrition education and obesity prevention services to SNAP-eligible individuals and families to help them make healthy food choices within a limited budget. The program offers classes, demonstrations, and educational materials focused on nutrition, food preparation, and physical activity.",
+  
+  "Commodity Supplemental Food Program (CSFP)": "CSFP provides monthly packages of healthy food to supplement the diets of low-income pregnant and postpartum women, children up to age six, and elderly people aged 60 and older. The program helps improve participants' health and nutrition status by providing nutritious USDA commodity foods.",
+  
+  "Section 8 Housing Choice Vouchers": "The Housing Choice Voucher program assists low-income families, elderly, and disabled individuals in obtaining decent, safe, and sanitary housing in the private market. Participants pay approximately 30% of their income toward rent, while the voucher covers the remainder up to a payment standard.",
+  
+  "Section 8 Project-Based Rental Assistance": "Project-based rental assistance provides rental subsidies that stay with specific housing units rather than following the tenant. Low-income families living in these units pay approximately 30% of their income toward rent, with the assistance covering the difference.",
+  
+  "Public Housing": "Public housing provides decent and safe rental housing for eligible low-income families, elderly, and persons with disabilities through locally administered programs. Public housing agencies own and operate these developments, offering affordable housing options in communities nationwide.",
+  
+  "Supportive Housing for the Elderly (Section 202)": "Section 202 provides capital advances and rental assistance to nonprofit organizations to develop and operate affordable housing for very low-income elderly persons. The program combines affordable housing with supportive services to help elderly residents maintain their independence.",
+  
+  "Supportive Housing for Persons with Disabilities (Section 811)": "Section 811 provides funding for the development and operation of rental housing with the availability of supportive services for very low-income adults with disabilities. The program helps persons with disabilities live as independently as possible in the community by providing affordable, accessible housing linked to supportive services.",
+  
+  "Community Development Block Grants (CDBG)": "CDBG provides communities with resources to address a wide range of unique community development needs, particularly in low- and moderate-income areas. Funds can be used for housing rehabilitation, public improvements, economic development, and social services that benefit eligible residents.",
+  
+  "HOME Investment Partnerships Program": "HOME provides formula grants to states and localities to fund a wide range of activities including building, buying, and rehabilitating affordable housing for rent or homeownership. The program also provides direct rental assistance to low-income people and helps first-time homebuyers purchase homes.",
+  
+  "Homeless Assistance Grants": "Homeless assistance grants fund a range of services for homeless individuals and families including emergency shelter, transitional housing, permanent supportive housing, and supportive services. The programs aim to help homeless persons achieve residential stability, increase their skills and income, and obtain greater self-determination.",
+  
+  "Rural Rental Assistance Program": "This program provides rental assistance to very low-income tenants living in Rural Development-financed housing developments. Tenants pay no more than 30% of their adjusted income for rent, with the program covering the difference between that amount and the approved rent.",
+  
+  "HUD-VASH Veterans Affairs Supportive Housing": "HUD-VASH combines Housing Choice Voucher rental assistance with VA supportive services to help homeless veterans and their families find and sustain permanent housing. The program provides long-term housing assistance and wraparound services to address the complex needs of homeless veterans.",
+  
+  "Federal Pell Grant": "Federal Pell Grants provide need-based financial aid to undergraduate students to help pay for college or career school. These grants do not need to be repaid and are awarded based on financial need, cost of attendance, and enrollment status.",
+  
+  "Federal Supplemental Educational Opportunity Grant (FSEOG)": "FSEOG provides additional need-based financial aid to undergraduate students with exceptional financial need, particularly those who receive Federal Pell Grants. These grants are administered by participating schools and do not need to be repaid.",
+  
+  "Federal Work-Study Program": "Federal Work-Study provides part-time employment opportunities for undergraduate and graduate students with financial need, allowing them to earn money to help pay educational expenses. Students work in jobs related to their course of study or in community service positions, typically on or near campus.",
+  
+  "Federal TRIO Programs": "TRIO programs provide outreach and student services to serve individuals from disadvantaged backgrounds to help them progress through the academic pipeline from middle school to postgraduate programs. Services include academic tutoring, career counseling, financial aid assistance, and mentoring to help students succeed in higher education.",
+  
+  "Gaining Early Awareness and Readiness for Undergraduate Programs (GEAR UP)": "GEAR UP provides grants to states and partnerships to provide services at high-poverty middle and high schools to increase the number of low-income students who are prepared to enter and succeed in postsecondary education. The program offers academic support, career exploration, financial aid information, and college preparation activities.",
+  
+  "Education for Homeless Children and Youth": "This program ensures that children and youth experiencing homelessness have equal access to the same free, appropriate public education as other children. The program provides funding to remove barriers to enrollment, attendance, and success in school for homeless students.",
+  
+  "Academic Competitiveness and SMART Grant Program": "These programs provided additional federal grant money to Pell Grant recipients who were pursuing demanding courses of study (discontinued after 2010-11 academic year). Academic Competitiveness Grants were for first and second-year students, while SMART Grants were for third and fourth-year students in science, technology, engineering, mathematics, or foreign language programs.",
+  
+  "Child Care and Development Fund (CCDF)": "CCDF helps low-income families access child care so they can work or attend education and training programs. The program provides vouchers or contracts with child care providers, supports activities to improve the quality of child care, and increases the supply of child care services.",
+  
+  "Head Start": "Head Start promotes school readiness of children ages three to five from low-income families by offering educational, nutritional, health, social and other services. The program provides comprehensive child development services and encourages parent involvement in their children's learning and development.",
+  
+  "Early Head Start": "Early Head Start serves pregnant women and families with infants and toddlers up to age three, providing child development services, family support services, and community partnerships. The program focuses on supporting healthy prenatal outcomes, enhancing child development, and strengthening family functioning.",
+  
+  "Foster Care (Title IV-E)": "Title IV-E Foster Care provides federal funding to states for the care of eligible children who have been removed from their homes due to abuse or neglect. The program covers maintenance payments, administrative costs, and training expenses for foster families and child welfare workers.",
+  
+  "Adoption Assistance (Title IV-E)": "Title IV-E Adoption Assistance provides ongoing financial support and medical coverage to families who adopt children with special needs from the foster care system. The program helps ensure that children who might otherwise remain in foster care can find permanent families by offsetting the costs of caring for children with special needs.",
+  
+  "Chafee Foster Care Independence Program": "The Chafee program helps current and former foster care youth achieve self-sufficiency by providing funding for independent living services, education, training, and support. Services can include life skills training, educational support, career preparation, and transitional living programs for youth aging out of foster care.",
+  
+  "Child Support Enforcement": "Child support enforcement services help establish paternity, locate noncustodial parents, establish child support orders, and collect child support payments. The program works to ensure that children receive the financial support they need from both parents, regardless of the parents' relationship status.",
+  
+  "Job Corps": "Job Corps is the nation's largest career technical training and education program for young people ages 16-24 who face barriers to employment. The program provides academic instruction, career technical training, and comprehensive support services in a residential setting to help participants gain the skills needed for meaningful careers.",
+  
+  "Workforce Innovation and Opportunity Act (WIOA) Adult Activities": "WIOA Adult Activities provide career and training services to help adults (18 and older) develop skills, find employment, and advance in their careers. Services include career counseling, skills assessments, job search assistance, and funding for occupational training programs.",
+  
+  "Workforce Innovation and Opportunity Act (WIOA) Youth Activities": "WIOA Youth Activities provide comprehensive services to help young people ages 14-24 who face barriers to employment and education achieve academic and employment success. Services include tutoring, alternative secondary school programs, paid work experiences, leadership development, and career exploration.",
+  
+  "Senior Community Service Employment Program (SCSEP)": "SCSEP provides part-time community service employment opportunities and job training for unemployed, low-income individuals who are 55 years of age and older. Participants work in community service positions while receiving training and support services to transition to unsubsidized employment.",
+  
+  "Trade Adjustment Assistance (TAA)": "TAA provides aid to workers who have lost their jobs or suffered a reduction in hours and wages as a result of increased imports or shifts in production to foreign countries. The program offers training, income support, job search and relocation allowances, and other services to help workers transition to new employment.",
+  
+  "Apprenticeship Programs": "Registered apprenticeship programs combine paid on-the-job training with related classroom instruction to prepare workers for skilled occupations. These programs are employer-driven and provide workers with portable skills and industry-recognized credentials while meeting the workforce needs of employers.",
+  
+  "Migrant and Seasonal Farmworker Programs": "These programs provide employment and training services specifically designed to meet the unique needs of migrant and seasonal farmworkers and their families. Services include job training, basic education, housing assistance, emergency services, and support services to help participants achieve economic self-sufficiency.",
+  
+  "Veterans' Employment and Training Programs": "These programs provide employment assistance, training, and other services to help veterans successfully transition to civilian careers. Services include career counseling, job placement assistance, skills training, and specialized programs for veterans with disabilities or other barriers to employment.",
+  
+  "Foster Grandparent Program": "The Foster Grandparent Program connects volunteers age 55 and older with children and young people who need additional support in their lives. Volunteers provide one-on-one mentoring, tutoring, and emotional support to help children develop self-confidence, academic skills, and social abilities.",
+  
+  "Senior Companion Program": "The Senior Companion Program matches volunteers age 55 and older with adults who need assistance to live independently in their homes and communities. Companions provide friendship, assistance with daily tasks, and support that helps clients maintain their independence and quality of life.",
+  
+  "RSVP (Retired and Senior Volunteer Program)": "RSVP connects volunteers age 55 and older with service opportunities in their communities that match their skills and availability. Volunteers serve in a variety of nonprofit organizations, public agencies, and faith-based groups, contributing their time and talents to address community needs.",
+  
+  "Vocational Rehabilitation State Grants": "Vocational rehabilitation programs help people with physical or mental disabilities prepare for, find, and maintain employment. Services include vocational counseling, medical services, training, assistive technology, and other support services needed to achieve employment goals.",
+  
+  "Independent Living Services": "Independent living services help people with significant disabilities achieve greater independence and integration in their communities and workplaces. Services include skills training, peer counseling, information and referral, individual and systems advocacy, and transition services for youth with disabilities.",
+  
+  "Developmental Disabilities Basic Support and Advocacy Grants": "These grants support state councils that advocate for and promote systems change to improve services for people with developmental disabilities and their families. State councils work to increase independence, productivity, integration, and inclusion in all aspects of community life for people with developmental disabilities.",
+  
+  "Protection and Advocacy for Individuals with Mental Illness (PAIMI)": "PAIMI programs protect and advocate for the rights of individuals with mental illness and investigate incidents of abuse and neglect in facilities providing care and treatment. These programs provide legal advocacy services and work to ensure that individuals receive appropriate treatment and their rights are protected.",
+  
+  "VA Health Care": "VA health care provides comprehensive medical services to eligible veterans through VA medical centers, clinics, and community providers. Services include primary care, specialty care, mental health treatment, rehabilitation services, and long-term care for veterans who meet eligibility requirements.",
+  
+  "VA Disability Compensation": "VA disability compensation provides monthly tax-free payments to veterans who were injured or became ill due to their military service. Compensation rates are based on the severity of the disability and its impact on the veteran's ability to work and perform daily activities.",
+  
+  "VA Pension": "VA pension provides monthly payments to wartime veterans with limited income who are permanently and totally disabled, or age 65 and older. This need-based benefit helps ensure that eligible veterans have sufficient income to meet basic living expenses.",
+  
+  "Veterans Education Benefits (GI Bill)": "GI Bill programs provide education benefits to help eligible service members and veterans pay for college, graduate school, vocational training, and other educational programs. Benefits can cover tuition, housing allowances, books, and other education-related expenses.",
+  
+  "Vocational Rehabilitation and Employment (VR&E)": "VR&E helps veterans with service-connected disabilities prepare for, find, and maintain suitable careers. The program provides education and training opportunities, employment assistance, and other support services to help veterans achieve maximum independence in daily living and suitable employment.",
+  
+  "Specially Adapted Housing Grants": "These grants help veterans with certain permanent and total service-connected disabilities adapt or purchase homes to accommodate their disabilities. The program provides funding for necessary modifications such as ramps, wider doorways, accessible bathrooms, and other adaptive features.",
+  
+  "VA Home Loans Program": "The VA home loan program helps eligible veterans, service members, and surviving spouses obtain mortgages to buy, build, repair, or retain homes. VA guarantees a portion of the loan, enabling lenders to provide more favorable terms such as no down payment and no private mortgage insurance requirements.",
+  
+  "Refugee Resettlement Program": "The Refugee Resettlement Program provides assistance to refugees during their first months in the United States to help them achieve economic self-sufficiency as quickly as possible. Services include case management, employment services, English language learning, and connections to community resources.",
+  
+  "Refugee Medical Assistance": "Refugee Medical Assistance provides temporary medical coverage to refugees, asylees, and other eligible humanitarian immigrants who are not eligible for Medicaid. Coverage typically lasts for the first eight months after arrival and includes essential health services and emergency care.",
+  
+  "Refugee Cash Assistance": "Refugee Cash Assistance provides temporary financial support to refugees, asylees, and other eligible humanitarian immigrants during their first months in the United States. The assistance helps cover basic living expenses while participants work toward economic self-sufficiency through employment or other means.",
+  
+  "Social Services and Targeted Assistance": "This program provides funding for social services that help refugees, asylees, and other eligible populations achieve economic self-sufficiency and successful integration into American society. Services include employment services, English language instruction, social adjustment counseling, and other support services.",
+  
+  "Transitional Cash and Medical Services Program": "This program provides temporary financial assistance and medical coverage to certain immigrants during their initial period in the United States. Benefits help ensure that eligible immigrants have basic support while they work toward self-sufficiency and transition to other programs or employment.",
+  
+  "Substance Abuse Prevention and Treatment Block Grant (SABG)": "SABG provides funding to states to support substance abuse prevention and treatment services for individuals who cannot afford private treatment or who are not covered by insurance. The program supports a range of prevention, early intervention, treatment, and recovery services.",
+  
+  "Community Mental Health Services Block Grant (MHBG)": "MHBG provides flexible funding to states to develop and implement comprehensive community mental health services for adults with serious mental illness and children with serious emotional disturbance. The program supports services that are not covered by insurance or other funding sources.",
+  
+  "Mental Health Promotion and Illness Prevention": "This program supports activities designed to promote mental health, prevent mental illness, and reduce the impact of mental health problems before they occur. Services include public education campaigns, community-based prevention programs, and early identification and intervention services.",
+  
+  "Projects for Assistance in Transition from Homelessness (PATH)": "PATH provides funding for outreach, mental health services, substance abuse services, case management, and housing services for individuals with serious mental illness who are homeless or at risk of homelessness. The program helps connect people to treatment, benefits, and stable housing.",
+  
+  "Emergency Food and Shelter Program (EFSP)": "EFSP provides funding to local organizations to supplement food and shelter programs for people experiencing hunger and homelessness. The program helps communities provide immediate relief through emergency food, shelter, and other essential services during times of crisis.",
+  
+  "FEMA Individual Assistance Programs": "FEMA Individual Assistance provides financial help and direct services to individuals and households affected by declared disasters to address their most serious disaster-related needs that cannot be met through insurance or other sources. Assistance can include housing support, other needs assistance, and crisis counseling services."
+}
