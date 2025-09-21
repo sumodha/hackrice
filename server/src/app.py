@@ -27,8 +27,8 @@ with open("data/social_welfare_programs.json", "r") as f:
 chat_a_history = []
 chat_a_sessions = {}
 chat_a_questions_asked = 0
-chat_a_system = f"""System prompt: You are a social welfare expert who's task is to help users figure out their needs and connect them to social welfare programs through natural conversations. 
-Keep answers short and concise. Only ask one question per response."""
+chat_a_system = f"""System prompt: You are a social welfare expert who's task is to help users figure out their needs and connect them to as many social welfare programs through natural conversations. 
+Keep answers short and concise. Only ask one question per response. These questions should be broad."""
 chat_a_reference = """Only reference and reconmend wellfare programs from this JSON: """ + json.dumps(data)
 chat_a_switch = """Based on your answers, we found the following programs to match your need the most: """
 
@@ -86,12 +86,12 @@ def stage_a_chat():
             contents = """System prompt: You are a social welfare expert who's task is to output a list of social welfare programs that could aid a potential user.
             You are given 1. the chat history of a users personal situation and 2. a JSON of all possible social welfare programs.
             Output: Generate only a comma separated python list of all social welfare programs that would assist the user based on the chat history and nothing else.
-            Example Output: [SNAPS, Medicare, TANF, ...] \n""" + f"Chat history: {",".join(chat_a_history)} \n" + f"JSON of sources: {chat_a_reference}" 
+            Example Output: ['Supplemental Nutrition Assistance Program (SNAP)', 'Medicaid', 'Supportive Housing for the Elderly (Section 202)', ...] \n""" + f"Chat history: {",".join(chat_a_history)} \n" + f"JSON of sources: {chat_a_reference}" 
         )
 
         # 2 convert output into a list
         output = response.text[1:-1]
-        output = output.split(", ")
+        output = output.split(", ") ## makes a list 
 
         # 3. change stage flag
         stage_var = 'b'
@@ -101,12 +101,12 @@ def stage_a_chat():
         # 4. Parse response for frontend
         pot_progs = []
         for prog in output:
-            pot_progs.append({"name" : prog,
-                             "description" : data.get(prog, "")})
+            pot_progs.append({"name" : prog.strip("'"),
+                             "description" : data.get(prog.strip("'"), "")})
             
-        chat_a_switch += response.text
-        chat_a_switch += "\n\n Use the buttons below to A. Check elgibility for each program or B. View programs in more detail"
-
+        chat_a_switch += response.text[1:-1]
+        chat_a_switch += "\n\n\n Use the buttons below to A. Check elgibility for each program or B. View programs in more detail"
+        print(pot_progs)
         return jsonify({"text": chat_a_switch, "programs" : pot_progs})
     
 
@@ -121,7 +121,7 @@ def stage_a_chat():
     chat_a_questions_asked += 1
 
     # return text response
-    return jsonify({"text": response.text, "programs" : []})
+    return jsonify({"text": response.text.strip(), "programs" : []})
 
 # send stage route
 @app.route("/api/stage", methods=["GET"])
