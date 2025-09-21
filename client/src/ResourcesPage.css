@@ -13,3 +13,22 @@
 #subtitle{
     font-style: italic;
 }
+
+#resources p {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: #180a1b;
+}
+
+/* Link styles */
+#resources a {
+    color: #341539;              /* matches your theme */
+    text-decoration: none;       /* removes underline */
+    font-weight: bold;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+#resources a:hover {
+    color: #180a1b;              /* darker on hover */
+    text-decoration: underline;  /* underline only on hover */
+}
