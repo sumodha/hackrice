@@ -10,7 +10,7 @@ const HomePage = () => {
     {name: "program 3", description: "descitpion 3"}, 
     {name: "program 3", description: "descitpion 3"}
   ]);
-  const [showStageB, setStageB] = useState(false)
+  const [showStageB, setStageB] = useState(false);
   const [showPrograms, setShowPrograms] = useState(false);
   const [eligibility, setEligibility] = useState(false);
   const programsRef = useRef(null);
@@ -178,7 +178,7 @@ const HomePage = () => {
         <div id = "homepage">
             <section id = "main">
             <h1>CareNet</h1>
-            <h2>A net of support, woven for you</h2>
+            <h2>a net of support, woven for you</h2>
             <button onClick={scrollToChat}> Start Chat</button>
             </section>
             <section id="chat" ref={chatRef}> 
@@ -223,8 +223,9 @@ const HomePage = () => {
       </div>
     </div>
             {showStageB && <div id="buttons-container">
-              <button onClick = {clickCheckEligibility}>Check Eligibility</button> 
               <button onClick={clickShowPrograms}>Show All Programs</button> 
+              <button onClick = {clickCheckEligibility}>Check Eligibility</button> 
+              
               </div>}
             {showPrograms && <div id = "programs-container">
               <h1 id="programs-header" ref={programsRef}>Programs</h1>
