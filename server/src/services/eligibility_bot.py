@@ -4,21 +4,195 @@ import numpy as np
 import os
 from google import genai
 from dotenv import load_dotenv
+from src.models.user import User
 
 class WelfareProgramEligibilityBot:
     """
     A bot to interactively determine eligibility for social welfare programs
     by asking the most informative questions.
-    """
+    """ 
 
-    def __init__(self, optimizer: eligibility_optimizer.WelfareProgramEligibilityOptimizer):
+    def __init__(self, optimizer: eligibility_optimizer.WelfareProgramEligibilityOptimizer = None, *, eligibility_data_path: str = None, df: pd.DataFrame = None, field_weights: dict = None):
         """
         Initializes the bot with an eligibility optimizer.
 
         Args:
-            optimizer (WelfareProgramEligibilityOptimizer): An instance of the optimizer class.
+            optimizer (WelfareProgramEligibilityOptimizer): An instance of the optimizer class. If
+                not provided, one will be constructed using `eligibility_data_path` or `df`.
+            eligibility_data_path (str): Optional CSV path to load into a DataFrame.
+            df (pd.DataFrame): Optional DataFrame to pass to the optimizer directly.
+            field_weights (dict): Optional field weights to pass to optimizer.
         """
-        self.optimizer = optimizer
+        # Initialize container fields
+        self.df = None
+        self.program_blacklist = []
+        self.field_blacklist = []
+
+        # If optimizer not provided, construct it with the provided df/path
+        if optimizer is not None:
+            self.optimizer = optimizer
+            # try to capture dataframe from optimizer if present
+            try:
+                self.df = getattr(optimizer, 'df', None)
+            except Exception:
+                self.df = None
+        else:
+            # Load DataFrame here (bot responsibility)
+            if df is not None:
+                data_df = df
+            elif eligibility_data_path is not None:
+                data_df = pd.read_csv(eligibility_data_path)
+            else:
+                raise ValueError('Must provide either an optimizer instance, a DataFrame `df`, or an `eligibility_data_path`.')
+
+            # Store df and pass it into optimizer
+            self.df = data_df
+            self.optimizer = eligibility_optimizer.WelfareProgramEligibilityOptimizer(df=data_df, field_weights=field_weights)
+
+    def generate_program_blacklist(self, whitelist: list[str], df: pd.DataFrame) -> list:
+        """
+        Generate a program_blacklist list from the given whitelist and dataframe.
+
+        Args:
+            whitelist (list[str]): Programs to keep (case-insensitive).
+            df (pd.DataFrame): DataFrame of programs (one program per row). The program
+                name is expected in the first column or a column named 'program'.
+
+        Returns:
+            list: List of program names (as they appear in the DataFrame index or column)
+            that are NOT in the whitelist. This can be passed as program_blacklist.
+        """
+        if whitelist is None:
+            whitelist = []
+
+        # Normalize whitelist for comparison
+        normalized_whitelist = {str(x).strip().lower() for x in whitelist}
+
+        # Determine program names in dataframe
+        program_names = []
+        # If df has an index named 'program' or has been indexed by program, use the index
+        if df.index is not None and df.index.name == 'program':
+            program_names = list(df.index.astype(str))
+        else:
+            # Prefer a column explicitly named 'program'
+            if 'program' in df.columns:
+                program_names = list(df['program'].astype(str))
+            else:
+                # Fallback to first column
+                if len(df.columns) > 0:
+                    first_col = df.columns[0]
+                    program_names = list(df[first_col].astype(str))
+                else:
+                    return []
+
+        # Build blacklist: programs present in df but not in whitelist
+        blacklist = []
+        for name in program_names:
+            if name is None:
+                continue
+            if str(name).strip().lower() not in normalized_whitelist:
+                blacklist.append(name)
+
+        # Update instance program_blacklist field
+        try:
+            self.program_blacklist = blacklist
+        except Exception:
+            # If assignment fails for any reason, ignore and return
+            pass
+
+        return None
+
+    def parse_user_from_transcript(self, transcript: str) -> User:
+        """
+        Parse an aggregated transcript string using Gemma and populate a User instance.
+
+        Args:
+            transcript (str): Aggregated user Q&A or free-text responses.
+
+        Returns:
+            User: A User instance with any fields populated that Gemma could extract.
+        """
+        # Create an empty User instance
+        user = User()
+
+        if not transcript or not transcript.strip():
+            return user
+
+        # Build prompt to ask Gemma to extract only the known User fields as JSON
+        user_fields = [
+            "age",
+            "citizen_or_lawful_resident",
+            "has_permanent_address",
+            "lives_with_people",
+            "monthly_income",
+            "employed",
+            "disabled",
+            "is_veteran",
+            "has_criminal_record",
+            "has_children",
+            "is_refugee",
+        ]
+
+        prompt = (
+            "You are given a transcript of user Q&A pairs or free-form text. "
+            "Extract values for the following fields if present and return a single JSON object: "
+            f"{user_fields}. Use integers for numeric fields and booleans for yes/no fields. "
+            "If a field cannot be determined, omit it. Respond only with the JSON object.\n\n"
+            f"Transcript:\n{transcript}"
+        )
+
+        # Load environment and call Gemma
+        load_dotenv()
+        GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+        if not GEMINI_API_KEY:
+            # No API key: can't call Gemma; return the empty User
+            return user
+
+        client = genai.Client(api_key=GEMINI_API_KEY)
+
+        try:
+            resp = client.models.generate_content(model="gemma-3-27b-it", contents=prompt)
+            text = getattr(resp, "text", str(resp)).strip()
+
+            # Extract first JSON object
+            import json, re
+
+            m = re.search(r"\{[\s\S]*\}", text)
+            if not m:
+                return user
+
+            parsed = json.loads(m.group(0))
+
+            # Populate User fields using set_field and collect populated keys
+            populated_keys = []
+            for k, v in parsed.items():
+                try:
+                    if hasattr(user, 'set_field'):
+                        user.set_field(k, v)
+                    else:
+                        setattr(user, k, v)
+                    populated_keys.append(k)
+                except Exception:
+                    # ignore invalid fields or values
+                    continue
+
+            # Update the bot's field_blacklist to include fields we populated
+            try:
+                # Keep only unique values and preserve order
+                seen = set()
+                ordered = []
+                for f in populated_keys:
+                    if f not in seen:
+                        ordered.append(f)
+                        seen.add(f)
+                self.field_blacklist = ordered
+            except Exception:
+                pass
+        except Exception:
+            # On any error, return the user as-is
+            return user
+
+        return user
 
     def get_next_field(self, field_blacklist=None, program_blacklist=None):
         """
@@ -107,21 +281,22 @@ class WelfareProgramEligibilityBot:
             # On any error, return a simple fallback question
             return f"What is your {field}?"
 
-    def ask_questions(self, all_user_fields: dict, field_blacklist=None, program_blacklist=None, num_questions: int = 4):
+    def ask_questions(self, user: User, field_blacklist=None, program_blacklist=None, num_questions: int = 4):
         """
-        Ask `num_questions` questions by repeatedly calling `ask_next_field_with_gemma`,
-        collect the user's answers into a running string, then call Gemma to map
-        collected answers into the target schema. Update `all_user_fields` (imported
-        from `app.py` in the caller) with any fields that have values.
+    Ask `num_questions` questions by repeatedly calling `ask_next_field_with_gemma`,
+    collect the user's answers into a running string, then call Gemma to map
+    collected answers into the target schema. Update the provided `User` instance
+    with any fields that have values using `user.set_field(field_name, value)`.
 
         Args:
-            all_user_fields (dict): Mutable dict to update with populated fields.
+            user (User): A `User` model instance to be updated with populated fields.
             field_blacklist (list): Fields already asked.
             program_blacklist (list): Programs already excluded.
             num_questions (int): Number of questions to ask (default 4).
 
         Returns:
-            dict: The subset of fields populated by the AI (only keys with values).
+            dict: The subset of fields populated by the AI (only keys with values). The
+            provided `user` object is also updated in-place.
         """
         if field_blacklist is None:
             field_blacklist = []
@@ -191,7 +366,10 @@ class WelfareProgramEligibilityBot:
             else:
                 field_blacklist.append(user_answer)
 
-        # After collecting answers, ask Gemma to populate the target fields as JSON
+    # After collecting answers, ask Gemma to populate the target fields as JSON
+    # The response will be parsed and mapped into the project's `User` model
+    # using `user.set_field(field_name, value)`. The `target_fields` list
+    # corresponds to attributes defined on `src.models.user.User`.
         target_fields = [
             "age",
             "citizen_or_lawful_resident",
@@ -241,9 +419,10 @@ class WelfareProgramEligibilityBot:
                 for k, v in parsed.items():
                     if k in target_fields and v is not None and v != "":
                         populated[k] = v
-                        # Update external all_user_fields dict only with present values
+                        # Update provided User instance using set_field where possible
                         try:
-                            all_user_fields[k] = v
+                            # Use user.set_field to assign values; this will safely ignore unknown fields
+                            user.set_field(k, v)
                         except Exception:
                             # If updating fails, ignore and continue
                             pass
