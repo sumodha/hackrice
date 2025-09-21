@@ -7,7 +7,7 @@ class WelfareProgram(BaseModel):
     min_age: Optional[int] = None
     max_age: Optional[int] = None
     sex: Optional[bool] = None
-    citizenship: list[bool]
+    citizenship: Optional[bool] = None
     address: Optional[bool] = None
     household_size: Optional[bool] = None
     max_monthly_income: Optional[int] = None
